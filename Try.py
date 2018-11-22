@@ -47,5 +47,4 @@ def success():
     return flask.render_template("index2.html", text=df.to_html(index=False))
 
 
-if __name__ == "__main__":
-    app.run()
+app.run()
