@@ -1,13 +1,15 @@
 import flask
 import psycopg2
-import os
+import subprocess
 
+proc = subprocess.Popen('heroku config:get DATABASE_URL -a romanrestplz', stdout=subprocess.PIPE, shell=True)
+db_url = proc.stdout.read().decode('utf-8').strip() + '?sslmode=require'
 
-DATABASE_URL = os.environ['https://data.heroku.com/datastores/5c2a73bb-6964-4619-b021-4dc22fd6762d#']
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+conn = psycopg2.connect(db_url)
 cur = conn.cursor()
 
 app = flask.Flask(__name__)
+
 
 @app.route("/")
 def welcome():
