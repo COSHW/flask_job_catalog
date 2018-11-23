@@ -33,7 +33,7 @@ def index2():
 def index3():
     cur.execute("insert into testing (column_1, column_2) values ('qwe', 'rty')")
     conn.commit()
-    cur.execute("select * from testing)
+    cur.execute("select * from testing")
     result = cur.fetchall()
     return str(result[0])
 
