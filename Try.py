@@ -19,6 +19,7 @@ def welcome():
 def index(id):
     cur.execute("select * from testing where id = " + str(id))
     result = cur.fetchall()
+    print(result)
     return str(result[0])
 
 
@@ -35,7 +36,8 @@ def index3():
     conn.commit()
     cur.execute("select * from testing")
     result = cur.fetchall()
-    return tuple(result[0])
+    print(result)
+    return str(result[0])
 
 
 if __name__ == "__main__":
