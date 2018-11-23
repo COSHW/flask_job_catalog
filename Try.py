@@ -1,17 +1,35 @@
 import flask
+import psycopg2
+import os
 
+
+DATABASE_URL = os.environ['https://data.heroku.com/datastores/5c2a73bb-6964-4619-b021-4dc22fd6762d#']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+cur = conn.cursor()
 
 app = flask.Flask(__name__)
 
+@app.route("/")
+def welcome():
+    return "Welcome!"
 
-@app.route("/<string:what>", methods=["GET"])
-def index(what):
-    return what
+
+@app.route("/<int:id>", methods=["GET"])
+def index(id):
+    cur.execute("select * from testing where id = " + id)
+    result = cur.fetchall()
+    return result
 
 
-@app.route("/<string:no>", methods=["POST"])
-def index2(no):
-    return no
+@app.route("/makeatable")
+def index2():
+    cur.execute("create table IF NOT EXISTS testing (id serial primary key, column_1 text, column_2 text)")
+    conn.commit()
+    cur.execute("insert into testing (column_1, column_2) values ('qwe', 'rty')")
+    conn.commit()
+    cur.execute("select * from testing")
+    result = cur.fetchall()
+    return result
 
 
 if __name__ == "__main__":
