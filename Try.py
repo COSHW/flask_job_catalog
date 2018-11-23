@@ -19,7 +19,6 @@ def welcome():
 def index(id):
     cur.execute("select * from testing where id = " + str(id))
     result = cur.fetchall()
-    print(result)
     return str(result[0])
 
 
@@ -34,7 +33,9 @@ def index2():
 def index3():
     cur.execute("insert into testing (column_1, column_2) values ('qwe', 'rty')")
     conn.commit()
-    return "Done!"
+    cur.execute("select * from testing)
+    result = cur.fetchall()
+    return str(result[0])
 
 
 if __name__ == "__main__":
