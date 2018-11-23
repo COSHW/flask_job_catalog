@@ -19,7 +19,8 @@ def welcome():
 def index(id):
     cur.execute("select * from testing where id = " + str(id))
     result = cur.fetchall()
-    return result[0]
+    print(result)
+    return str(result[0])
 
 
 @app.route("/makeatable")
@@ -33,7 +34,6 @@ def index2():
 def index3():
     cur.execute("insert into testing (column_1, column_2) values ('qwe', 'rty')")
     conn.commit()
-    cur.execute("select * from testing")
     return "Done!"
 
 
