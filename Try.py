@@ -30,7 +30,7 @@ def index2():
     conn.commit()
     cur.execute("select * from testing")
     result = cur.fetchall()
-    return result
+    return result[0]
 
 
 if __name__ == "__main__":
