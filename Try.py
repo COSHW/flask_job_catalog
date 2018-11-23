@@ -17,20 +17,24 @@ def welcome():
 
 @app.route("/<int:id>", methods=["GET"])
 def index(id):
-    cur.execute("select * from testing where id = " + id)
+    cur.execute("select * from testing where id = " + str(id))
     result = cur.fetchall()
-    return result
+    return result[0]
 
 
 @app.route("/makeatable")
 def index2():
     cur.execute("create table IF NOT EXISTS testing (id serial primary key, column_1 text, column_2 text)")
     conn.commit()
+    return "Done!"
+
+
+@app.route("/insert")
+def index3():
     cur.execute("insert into testing (column_1, column_2) values ('qwe', 'rty')")
     conn.commit()
     cur.execute("select * from testing")
-    result = cur.fetchall()
-    return result[0]
+    return "Done!"
 
 
 if __name__ == "__main__":
