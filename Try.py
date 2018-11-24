@@ -43,7 +43,7 @@ def index3(name, what):
 
 
 @app.route("/tools/db/delete+table+<string:name>")
-def index2(name):
+def index4(name):
     cur.execute("drop table "+name)
     conn.commit()
     return "Done!"
