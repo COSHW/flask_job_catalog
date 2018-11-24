@@ -49,5 +49,12 @@ def index4(name):
     return "Done!"
 
 
+@app.route("/tools/db/showalltables")
+def index5():
+    cur.execute("SELECT * FROM pg_catalog.pg_tables")
+    result = cur.fetchall()
+    return str(result[0])
+
+
 if __name__ == "__main__":
     app.run()
