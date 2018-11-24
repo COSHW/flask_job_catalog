@@ -19,7 +19,7 @@ def welcome():
 def index(id):
     cur.execute("select * from testing where id = " + str(id))
     result = cur.fetchall()
-    return str(result[0])
+    return flask.jsonify({'items':result[0]})
 
 
 @app.route("/tools/db/makeatable+<string:name>")
