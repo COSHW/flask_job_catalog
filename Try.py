@@ -21,9 +21,10 @@ def get(name):
     result = cur.fetchall()
     final = []
     for item in result:
-        id = flask.jsonify({str(item[0]): {"name": str(item[1]), "surname": str(item[2])}})
+        dic = {"name": str(item[1]), "surname": str(item[2])}
+        id = flask.jsonify({str(item[0]): dic})
         final.append(id)
-    return str(final)
+    return flask.jsonify({"items": final})
 
 
 @app.route("/tools/db/maintain/<string:name>/<int:id>", methods=["GET"])
