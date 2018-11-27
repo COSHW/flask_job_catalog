@@ -19,7 +19,7 @@ def welcome():
 def get(name):
     cur.execute("select * from "+name)
     result = cur.fetchall()
-    print(result[0])
+    print(result)
     return flask.jsonify({'items': str(result[0])})
 
 
