@@ -22,7 +22,6 @@ def make_table(name):
     return "Done! Table {} was created.".format(name)
 
 
-
 @app.route("/tools/db/<string:name>", methods=['HEAD'])
 def delete_table(name):
     cur.execute("drop table "+name)
@@ -30,11 +29,11 @@ def delete_table(name):
     return "Done! Table {} was deleted.".format(name)
 
 
-@app.route("/tools/db", methods=['HEAD'])
+@app.route("/tools/db/gettables")
 def show_tables():
     cur.execute("SELECT * FROM pg_catalog.pg_tables")
     result = cur.fetchall()
-    return str(result[0])
+    return flask.jsonify({'items': result[0]})
 
 
 if __name__ == "__main__":
