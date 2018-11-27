@@ -15,42 +15,63 @@ def welcome():
     return "Welcome!"
 
 
-@app.route("/tools/db/select+<int:id>", methods=["GET"])
-def index(id):
+@app.route("/tools/db/", methods=["GET"])
+def get():
+    cur.execute("select * from testing")
+    result = cur.fetchall()
+    return flask.jsonify({'items': result[0]})
+
+
+@app.route("/tools/db/<int:id>", methods=["GET"])
+def get_by_id(id):
     cur.execute("select * from testing where id = " + str(id))
     result = cur.fetchall()
-    return flask.jsonify({'items':result[0]})
+    return flask.jsonify({'items': result[0]})
 
 
-@app.route("/tools/db/makeatable+<string:name>")
-def index2(name):
-    cur.execute("create table IF NOT EXISTS "+ name+ " (id serial primary key, column_1 text, column_2 text)")
+@app.route("/tools/db/<string:name>", methods=['OPTIONS'])
+def make_table(name):
+    cur.execute("create table IF NOT EXISTS " + name + " (id serial primary key, column_1 text, column_2 text)")
     conn.commit()
-    return "Done!"
+    return "Done! Table {} was created.".format(name)
 
 
-@app.route("/tools/db/insertinto+<string:name>+vlaues+<string:what>")
-def index3(name, what):
-    what = what.split(":")
-    cur.execute("insert into " + name + " (column_1, column_2) values ('"+what[0]+"', '"+what[1]+"')")
+@app.route("/tools/db/<string:name>/vlaues/<string:what>/<string:what2>", methods=['POST'])
+def insert_into(name, what, what2):
+    cur.execute("insert into " + name + " (column_1, column_2) values ('"+what+"', '"+what2+"')")
     conn.commit()
     cur.execute("select * from testing")
     result = cur.fetchall()
-    info = ""
-    for item in result[0]:
-        info = info + str(item) + ", "
-    return info[:-2]
+    return flask.jsonify({'items': result[0]})
 
 
-@app.route("/tools/db/delete+table+<string:name>")
-def index4(name):
+@app.route("/tools/db/<string:name>/vlaues/<string:what>/<string:what2>/whereid/<string:id>", methods=['POST'])
+def insert_into(name, what, what2, id):
+    cur.execute("update " + name + " set column_1 = '"+what+"', column_2 = '"+what2+"' where id = " + id)
+    conn.commit()
+    cur.execute("select * from testing")
+    result = cur.fetchall()
+    return flask.jsonify({'items': result[0]})
+
+
+@app.route("/tools/db/<string:name>/whereid/<string:id>", methods=['DELETE'])
+def insert_into(name, what, what2, id):
+    cur.execute("update " + name + " set column_1 = '"+what+"', column_2 = '"+what2+"' where id = " + id)
+    conn.commit()
+    cur.execute("select * from testing")
+    result = cur.fetchall()
+    return flask.jsonify({'items': result[0]})
+
+
+@app.route("/tools/db/<string:name>", methods=['HEAD'])
+def delete_table(name):
     cur.execute("drop table "+name)
     conn.commit()
-    return "Done!"
+    return "Done! Table {} was deleted.".format(name)
 
 
-@app.route("/tools/db/showalltables")
-def index5():
+@app.route("/tools/db", methods=['HEAD'])
+def show_tables():
     cur.execute("SELECT * FROM pg_catalog.pg_tables")
     result = cur.fetchall()
     return str(result[0])
