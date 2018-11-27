@@ -23,6 +23,7 @@ def get(name):
     for item in result:
         id = flask.jsonify({str(item[0]): {"name": str(item[1]), "surname": str(item[2])}})
         final.append(id)
+    print(final)
     return flask.jsonify({"items": final})
 
 
