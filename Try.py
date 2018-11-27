@@ -26,7 +26,7 @@ def get(name):
 def get_by_id(name, id):
     cur.execute("select * from "+name+" where id = " + str(id))
     result = cur.fetchall()
-    return flask.jsonify({'items': result[0]})
+    return flask.jsonify({'items': str(result)})
 
 
 @app.route("/tools/db/maintain/<string:name>/vlaues/<string:what>/<string:what2>", methods=['POST'])
@@ -35,7 +35,7 @@ def insert_into(name, what, what2):
     conn.commit()
     cur.execute("select * from "+name)
     result = cur.fetchall()
-    return flask.jsonify({'items': result[0]})
+    return flask.jsonify({'items': str(result)})
 
 
 @app.route("/tools/db/maintain/<string:name>/vlaues/<string:what>/<string:what2>/whereid/<string:id>", methods=['POST'])
@@ -44,7 +44,7 @@ def update(name, what, what2, id):
     conn.commit()
     cur.execute("select * from "+name)
     result = cur.fetchall()
-    return flask.jsonify({'items': result[0]})
+    return flask.jsonify({'items': str(result)})
 
 
 @app.route("/tools/db/maintain/<string:name>/whereid/<string:id>", methods=['DELETE'])
@@ -53,7 +53,7 @@ def delete(name, id):
     conn.commit()
     cur.execute("select * from "+name)
     result = cur.fetchall()
-    return flask.jsonify({'items': result[0]})
+    return flask.jsonify({'items': str(result)})
 
 
 @app.route("/tools/db/createtable/<string:name>")
@@ -74,7 +74,7 @@ def delete_table(name):
 def show_tables():
     cur.execute("SELECT * FROM pg_catalog.pg_tables")
     result = cur.fetchall()
-    return flask.jsonify({'items': result[0]})
+    return flask.jsonify({'items': str(result)})
 
 
 if __name__ == "__main__":
