@@ -23,7 +23,7 @@ def get(name):
     for item in result:
         id = flask.jsonify({str(item[0]): {"name": str(item[1]), "surname": str(item[2])}})
         final.append(id)
-    return final
+    return str(final)
 
 
 @app.route("/tools/db/maintain/<string:name>/<int:id>", methods=["GET"])
