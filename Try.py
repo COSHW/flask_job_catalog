@@ -15,21 +15,21 @@ def welcome():
     return "Welcome!"
 
 
-@app.route("/tools/db/<string:name>", methods=["GET"])
+@app.route("/tools/db/maintain/<string:name>", methods=["GET"])
 def get(name):
     cur.execute("select * from "+name)
     result = cur.fetchall()
     return flask.jsonify({'items': result[0]})
 
 
-@app.route("/tools/db/<string:name>/<int:id>", methods=["GET"])
+@app.route("/tools/db/maintain/<string:name>/<int:id>", methods=["GET"])
 def get_by_id(name, id):
     cur.execute("select * from "+name+" where id = " + str(id))
     result = cur.fetchall()
     return flask.jsonify({'items': result[0]})
 
 
-@app.route("/tools/db/<string:name>/vlaues/<string:what>/<string:what2>", methods=['POST'])
+@app.route("/tools/db/maintain/<string:name>/vlaues/<string:what>/<string:what2>", methods=['POST'])
 def insert_into(name, what, what2):
     cur.execute("insert into " + name + " (column_1, column_2) values ('"+what+"', '"+what2+"')")
     conn.commit()
@@ -38,7 +38,7 @@ def insert_into(name, what, what2):
     return flask.jsonify({'items': result[0]})
 
 
-@app.route("/tools/db/<string:name>/vlaues/<string:what>/<string:what2>/whereid/<string:id>", methods=['POST'])
+@app.route("/tools/db/maintain/<string:name>/vlaues/<string:what>/<string:what2>/whereid/<string:id>", methods=['POST'])
 def update(name, what, what2, id):
     cur.execute("update " + name + " set column_1 = '"+what+"', column_2 = '"+what2+"' where id = " + id)
     conn.commit()
@@ -47,7 +47,7 @@ def update(name, what, what2, id):
     return flask.jsonify({'items': result[0]})
 
 
-@app.route("/tools/db/<string:name>/whereid/<string:id>", methods=['DELETE'])
+@app.route("/tools/db/maintain/<string:name>/whereid/<string:id>", methods=['DELETE'])
 def delete(name, id):
     cur.execute("delete from "+name+"where id = "+id)
     conn.commit()
@@ -74,7 +74,7 @@ def delete_table(name):
 def show_tables():
     cur.execute("SELECT * FROM pg_catalog.pg_tables")
     result = cur.fetchall()
-    return str(result[0])
+    return flask.jsonify({'items': result[0]})
 
 
 if __name__ == "__main__":
