@@ -19,7 +19,11 @@ def welcome():
 def get(name):
     cur.execute("select * from "+name)
     result = cur.fetchall()
-    return flask.jsonify({'items': str(result)})
+    final = []
+    for item in result:
+        id = flask.jsonify({str(item[0]): {"name": str(item[1]), "surname": str(item[2])}})
+        final.append(id)
+    return flask.jsonify({"items": final})
 
 
 @app.route("/tools/db/maintain/<string:name>/<int:id>", methods=["GET"])
