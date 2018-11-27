@@ -74,7 +74,7 @@ def delete_table(name):
 def show_tables():
     cur.execute("SELECT * FROM pg_catalog.pg_tables")
     result = cur.fetchall()
-    return flask.jsonify({'items': str(result)})
+    return flask.jsonify({'items': str([item[1] for item in result[:-69]])})
 
 
 if __name__ == "__main__":
