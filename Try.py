@@ -44,7 +44,7 @@ def insert_into(db):
     surname = flask.request.json['surname']
     cur.execute("insert into " + db + " (column_1, column_2) values ('"+name+"', '"+surname+"')")
     conn.commit()
-    cur.execute("select * from "+name)
+    cur.execute("select * from "+db)
     result = cur.fetchall()
     final = []
     for a in range(len(result)):
