@@ -12,7 +12,7 @@ app = flask.Flask(__name__)
 
 @app.route("/")
 def welcome():
-    return "Welcome!"
+    return "Bbonjoure!C'est mon application. Дальше не знаю"
 
 
 @app.route("/tools/db/maintain/<string:name>", methods=["GET"])
