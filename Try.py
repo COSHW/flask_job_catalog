@@ -40,10 +40,9 @@ def get(name):
     cur.execute("select * from "+name)
     result = cur.fetchall()
     final = []
-    for item in result:
-        dic = {"name": str(item[1]), "surname": str(item[2])}
-        id = flask.jsonify({str(item[0]): dic})
-        final.append(id)
+    for a in range(len(result)):
+        dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
+        final.append(dic)
     return flask.jsonify({"items": final})
 
 
