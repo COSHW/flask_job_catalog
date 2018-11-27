@@ -15,26 +15,6 @@ def welcome():
     return "Bbonjoure! C'est mon application. Дальше не знаю"
 
 
-tasks = [
-    {
-        'id': 1,
-        'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web',
-        'done': False
-    }
-]
-
-@app.route('/todo/api/v1.0/tasks', methods=['GET'])
-def get_tasks():
-    return flask.jsonify({'tasks': tasks})
-
-
 @app.route("/tools/db/maintain/<string:name>", methods=["GET"])
 def get(name):
     cur.execute("select * from "+name)
@@ -50,16 +30,27 @@ def get(name):
 def get_by_id(name, id):
     cur.execute("select * from "+name+" where id = " + str(id))
     result = cur.fetchall()
-    return flask.jsonify({'items': str(result)})
+    final = []
+    dic = {result[0][0]: {"name": result[0][1], "surname": result[0][2]}}
+    final.append(dic)
+    return flask.jsonify({"items": final})
 
 
-@app.route("/tools/db/maintain/<string:name>/vlaues/<string:what>/<string:what2>", methods=['POST'])
-def insert_into(name, what, what2):
-    cur.execute("insert into " + name + " (column_1, column_2) values ('"+what+"', '"+what2+"')")
+@app.route("/tools/db/maintain/<string:db>", methods=['POST'])
+def insert_into(db):
+    if not flask.request.json or not 'name' in flask.request.json or not 'surname' in flask.request.json:
+        flask.abort(400)
+    name = flask.request.json['name']
+    surname = flask.request.json['surname']
+    cur.execute("insert into " + db + " (column_1, column_2) values ('"+name+"', '"+surname+"')")
     conn.commit()
     cur.execute("select * from "+name)
     result = cur.fetchall()
-    return flask.jsonify({'items': str(result)})
+    final = []
+    for a in range(len(result)):
+        dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
+        final.append(dic)
+    return flask.jsonify({"items": final})
 
 
 @app.route("/tools/db/maintain/<string:name>/vlaues/<string:what>/<string:what2>/whereid/<string:id>", methods=['POST'])
@@ -68,7 +59,12 @@ def update(name, what, what2, id):
     conn.commit()
     cur.execute("select * from "+name)
     result = cur.fetchall()
-    return flask.jsonify({'items': str(result)})
+    final = []
+    for a in range(len(result)):
+        dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
+        final.append(dic)
+    return flask.jsonify({"items": final})
+
 
 
 @app.route("/tools/db/maintain/<string:name>/whereid/<string:id>", methods=['DELETE'])
@@ -77,7 +73,12 @@ def delete(name, id):
     conn.commit()
     cur.execute("select * from "+name)
     result = cur.fetchall()
-    return flask.jsonify({'items': str(result)})
+    final = []
+    for a in range(len(result)):
+        dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
+        final.append(dic)
+    return flask.jsonify({"items": final})
+
 
 
 @app.route("/tools/db/createtable/<string:name>")
