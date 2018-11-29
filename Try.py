@@ -12,12 +12,15 @@ app = flask.Flask(__name__)
 
 @app.route("/")
 def welcome():
-    return "Bbonjoure! C'est mon application. Дальше не знаю"
+    message = "Bbonjoure! C'est mon application. Дальше не знаю.\nСсылки для манимуляций с датабазой:\n    " \
+              "https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, POST])\n    " \
+              "https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, PUT, DELETE]) "
+    return message
 
 
-@app.route("/tools/db/maintain/<string:name>", methods=["GET"])
-def get(name):
-    cur.execute("select * from "+name)
+@app.route("/tools/db/maintain/<string:db>", methods=["GET"])
+def get(db):
+    cur.execute("select * from "+db)
     result = cur.fetchall()
     final = []
     for a in range(len(result)):
@@ -26,9 +29,9 @@ def get(name):
     return flask.jsonify({"items": final})
 
 
-@app.route("/tools/db/maintain/<string:name>/<int:id>", methods=["GET"])
-def get_by_id(name, id):
-    cur.execute("select * from "+name+" where id = " + str(id))
+@app.route("/tools/db/maintain/<string:db>/<int:id>", methods=["GET"])
+def get_by_id(db, id):
+    cur.execute("select * from "+db+" where id = " + str(id))
     result = cur.fetchall()
     final = []
     dic = {result[0][0]: {"name": result[0][1], "surname": result[0][2]}}
@@ -53,11 +56,15 @@ def insert_into(db):
     return flask.jsonify({"items": final})
 
 
-@app.route("/tools/db/maintain/<string:name>/vlaues/<string:what>/<string:what2>/whereid/<string:id>", methods=['POST'])
-def update(name, what, what2, id):
-    cur.execute("update " + name + " set column_1 = '"+what+"', column_2 = '"+what2+"' where id = " + id)
+@app.route("/tools/db/maintain/<string:db>/<string:id>", methods=['PUT'])
+def update(db, id):
+    if not flask.request.json or not 'name' in flask.request.json or not 'surname' in flask.request.json:
+        flask.abort(400)
+    name = flask.request.json['name']
+    surname = flask.request.json['surname']
+    cur.execute("update " + db + " set column_1 = '"+name+"', column_2 = '"+surname+"' where id = " + id)
     conn.commit()
-    cur.execute("select * from "+name)
+    cur.execute("select * from "+db)
     result = cur.fetchall()
     final = []
     for a in range(len(result)):
@@ -67,7 +74,7 @@ def update(name, what, what2, id):
 
 
 
-@app.route("/tools/db/maintain/<string:name>/whereid/<string:id>", methods=['DELETE'])
+@app.route("/tools/db/maintain/<string:name>/<string:id>", methods=['DELETE'])
 def delete(name, id):
     cur.execute("delete from "+name+"where id = "+id)
     conn.commit()
