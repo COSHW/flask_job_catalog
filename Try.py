@@ -12,9 +12,9 @@ app = flask.Flask(__name__)
 
 @app.route("/")
 def welcome():
-    message = "Bbonjoure! C'est mon application. Дальше не знаю.\nСсылки для манимуляций с датабазой:    " \
-              "\nhttps://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, POST])\n    " \
-              "https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, PUT, DELETE]) "
+    message = "Bbonjoure! C'est mon application. Дальше не знаю.\n Ссылки для манимуляций с датабазой:" \
+              "\n     https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, POST])\n " \
+              "    https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, PUT, DELETE]) "
     return message
 
 
@@ -36,7 +36,7 @@ def get_by_id(db, id):
     final = []
     dic = {result[0][0]: {"name": result[0][1], "surname": result[0][2]}}
     final.append(dic)
-    return flask.jsonify({"items": final})
+    return flask.jsonify(final)
 
 
 @app.route("/tools/db/maintain/<string:db>", methods=['POST'])
@@ -76,18 +76,15 @@ def update(db, id):
 
 @app.route("/tools/db/maintain/<string:name>/<string:id>", methods=['DELETE'])
 def delete(name, id):
-    try:
-        cur.execute("delete from "+name+" where id = "+id)
-        conn.commit()
-        cur.execute("select * from "+name)
-        result = cur.fetchall()
-        final = []
-        for a in range(len(result)):
-            dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
-            final.append(dic)
-        return flask.jsonify({"items": final})
-    except Exception as e:
-        return e
+    cur.execute("delete from "+name+" where id = "+id)
+    conn.commit()
+    cur.execute("select * from "+name)
+    result = cur.fetchall()
+    final = []
+    for a in range(len(result)):
+        dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
+        final.append(dic)
+    return flask.jsonify({"items": final})
 
 
 @app.route("/tools/db/createtable/<string:name>")
