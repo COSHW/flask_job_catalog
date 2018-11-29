@@ -12,9 +12,7 @@ app = flask.Flask(__name__)
 
 @app.route("/")
 def welcome():
-    message = "Bbonjoure! C'est mon application. Дальше не знаю.\n Ссылки для манимуляций с датабазой:" \
-              "\n     https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, POST])\n " \
-              "    https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, PUT, DELETE]) "
+    message = "Bbonjoure! C'est mon application. Дальше не знаю. \n Ссылки для манимуляций с датабазой: \n     https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, POST]) \n    https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, PUT, DELETE])"
     return message
 
 
@@ -22,10 +20,9 @@ def welcome():
 def get(db):
     cur.execute("select * from "+db)
     result = cur.fetchall()
-    final = []
+    final = {}
     for a in range(len(result)):
-        dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
-        final.append(dic)
+        final.update({result[a][0]: {"name": result[a][1], "surname": result[a][2]}})
     return flask.jsonify({"items": final})
 
 
@@ -33,10 +30,9 @@ def get(db):
 def get_by_id(db, id):
     cur.execute("select * from "+db+" where id = " + str(id))
     result = cur.fetchall()
-    final = []
-    dic = {result[0][0]: {"name": result[0][1], "surname": result[0][2]}}
-    final.append(dic)
-    return flask.jsonify(final)
+    final = {}
+    final.update({result[0][0]: {"name": result[0][1], "surname": result[0][2]}})
+    return flask.jsonify({"items": final})
 
 
 @app.route("/tools/db/maintain/<string:db>", methods=['POST'])
@@ -49,10 +45,9 @@ def insert_into(db):
     conn.commit()
     cur.execute("select * from "+db)
     result = cur.fetchall()
-    final = []
+    final = {}
     for a in range(len(result)):
-        dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
-        final.append(dic)
+        final.update({result[a][0]: {"name": result[a][1], "surname": result[a][2]}})
     return flask.jsonify({"items": final})
 
 
@@ -66,10 +61,9 @@ def update(db, id):
     conn.commit()
     cur.execute("select * from "+db)
     result = cur.fetchall()
-    final = []
+    final = {}
     for a in range(len(result)):
-        dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
-        final.append(dic)
+        final.update({result[a][0]: {"name": result[a][1], "surname": result[a][2]}})
     return flask.jsonify({"items": final})
 
 
@@ -80,10 +74,9 @@ def delete(name, id):
     conn.commit()
     cur.execute("select * from "+name)
     result = cur.fetchall()
-    final = []
+    final = {}
     for a in range(len(result)):
-        dic = {result[a][0]: {"name": result[a][1], "surname": result[a][2]}}
-        final.append(dic)
+        final.update({result[a][0]: {"name": result[a][1], "surname": result[a][2]}})
     return flask.jsonify({"items": final})
 
 
