@@ -77,7 +77,7 @@ def update(db, id):
 @app.route("/tools/db/maintain/<string:name>/<string:id>", methods=['DELETE'])
 def delete(name, id):
     try:
-        cur.execute("delete from "+name+"where id = "+id)
+        cur.execute("delete from "+name+" where id = "+id)
         conn.commit()
         cur.execute("select * from "+name)
         result = cur.fetchall()
