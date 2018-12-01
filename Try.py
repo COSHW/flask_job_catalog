@@ -116,7 +116,7 @@ def delete(id):
     return "Done!"
 
 
-"""
+
 @app.route("/tools/db/createtable/worker")
 def make_table1():
     cur.execute("create table IF NOT EXISTS worker (id serial primary key, surname text, name text, patronymic text, house text)")
@@ -136,7 +136,14 @@ def make_table3():
     cur.execute("create table IF NOT EXISTS position (workerid int, position text, payment text, payday text, foreign key (workerid) references worker(id))")
     conn.commit()
     return "Done! Table {} was created."
-"""
+
+
+@app.route("/tools/db/deletetable/<string:db>")
+def make_table3(db):
+    cur.execute("drop table "+db)
+    conn.commit()
+    return "Done!"
+
 
 if __name__ == "__main__":
     app.run()
