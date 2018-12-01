@@ -76,12 +76,12 @@ def insert_into():
     schedule = flask.request.json['schedule']
     worktime = flask.request.json['worktime']
     phonenumber = flask.request.json['phonenumber']
-    cur.execute("insert into schedule (workerid, schedule, worktime, phonenumber) values (select id from worker where surname like "+surname+" and name like "+name+" and patronymic like "+patronymic+", '"+schedule+"', '"+worktime+"', '"+phonenumber+"')")
+    cur.execute("insert into schedule (workerid, schedule, worktime, phonenumber) values (select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"', '"+schedule+"', '"+worktime+"', '"+phonenumber+"')")
     conn.commit()
     position = flask.request.json['position']
     payment = flask.request.json['payment']
     payday = flask.request.json['payday']
-    cur.execute("insert into position (workerid, position, payment, payday) values (select id from worker where surname like "+surname+" and name like "+name+" and patronymic like "+patronymic+", '"+position+"', '"+payment+"', '"+payday+"')")
+    cur.execute("insert into position (workerid, position, payment, payday) values (select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"', '"+position+"', '"+payment+"', '"+payday+"')")
     conn.commit()
     return "Done!"
 
