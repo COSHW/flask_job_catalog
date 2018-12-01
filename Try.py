@@ -12,74 +12,111 @@ app = flask.Flask(__name__)
 
 @app.route("/")
 def welcome():
-    message = "Bonjoure! C'est mon application. Дальше не знаю. \n Ссылки для манимуляций с датабазой: \n     https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, POST]) \n    https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, PUT, DELETE])"
+    message = "Bonjoure! C'est mon application. Дальше не знаю."
     return message
 
 
-@app.route("/<string:db>/tools/db/maintain", methods=["GET"])
+@app.route("/tools/db/tablecontent/<string:db>", methods=["GET"])
 def get(db):
-    cur.execute("select * from "+db)
+    final = {}
+    if db == "worker":
+        cur.execute("select * from " + db)
+        result = cur.fetchall()
+        for a in range(len(result)):
+            final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4]}})
+        return flask.jsonify({"workers": final})
+    elif db == "schedule":
+        cur.execute("select * from " + db)
+        result = cur.fetchall()
+        for a in range(len(result)):
+            final.update({result[a][0]: {"schedule": result[a][1], "worktime": result[a][2], "phonenumber": result[a][3]}})
+        return flask.jsonify({"schedules": final})
+    elif db == "position":
+        cur.execute("select * from " + db)
+        result = cur.fetchall()
+        for a in range(len(result)):
+            final.update({result[a][0]: {"position": result[a][1], "payment": result[a][2], "payday": result[a][3]}})
+        return flask.jsonify({"positions": final})
+    else:
+        return "No table called {}".format(db)
+
+
+@app.route("/tools/db/maintain", methods=["GET"])
+def get():
+    cur.execute("select worker.*, schedule.schedule, schedule.worktime, schedule.phonenumber, position.position, position.payment, position.payday from worker inner join schedule on worker.id=schedule.workerid inner join position on worker.id=position.workerid")
     result = cur.fetchall()
     final = {}
     for a in range(len(result)):
-        final.update({result[a][0]: {"name": result[a][1], "surname": result[a][2]}})
-    return flask.jsonify({"items": final})
+        final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4], "schedule": result[a][5], "worktime": result[a][6], "phonenumber": result[a][7], "position": result[a][8], "payment": result[a][9], "payday": result[a][10]}})
+    return flask.jsonify({"workers": final})
 
 
-@app.route("/<string:db>/tools/db/maintain/<int:id>", methods=["GET"])
-def get_by_id(db, id):
-    cur.execute("select * from "+db+" where id = " + str(id))
+@app.route("/tools/db/maintain/<int:id>", methods=["GET"])
+def get_by_id(id):
+    cur.execute("select worker.*, schedule.schedule, schedule.worktime, schedule.phonenumber, position.position, position.payment, position.payday from worker inner join schedule on worker.id=schedule.workerid inner join position on worker.id=position.workerid where id = " + str(id))
     result = cur.fetchall()
     final = {}
-    final.update({result[0][0]: {"name": result[0][1], "surname": result[0][2]}})
+    final.update({result[0][0]: {"surname": result[0][1], "name": result[0][2], "patronymic": result[0][3],
+                                 "house": result[0][4], "schedule": result[0][5], "worktime": result[0][6],
+                                 "phonenumber": result[0][7], "position": result[0][8], "payment": result[0][9],
+                                 "payday": result[0][10]}})
     return flask.jsonify({"items": final})
 
 
-@app.route("/<string:db>/tools/db/maintain", methods=['POST'])
-def insert_into(db):
+@app.route("/tools/db/maintain", methods=['POST'])
+def insert_into():
     if not flask.request.json or not 'name' in flask.request.json or not 'surname' in flask.request.json:
         flask.abort(400)
-    name = flask.request.json['name']
     surname = flask.request.json['surname']
-    cur.execute("insert into " + db + " (column_1, column_2) values ('"+name+"', '"+surname+"')")
+    name = flask.request.json['name']
+    patronymic = flask.request.json['patronymic']
+    house = flask.request.json['house']
+    cur.execute("insert into worker (surname, name, patronymic, house) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"')")
     conn.commit()
-    cur.execute("select * from "+db)
-    result = cur.fetchall()
-    final = {}
-    for a in range(len(result)):
-        final.update({result[a][0]: {"name": result[a][1], "surname": result[a][2]}})
-    return flask.jsonify({"items": final})
+    schedule = flask.request.json['schedule']
+    worktime = flask.request.json['worktime']
+    phonenumber = flask.request.json['phonenumber']
+    cur.execute("insert into schedule (schedule, worktime, phonenumber) values ('"+schedule+"', '"+worktime+"', '"+phonenumber+"')")
+    conn.commit()
+    position = flask.request.json['position']
+    payment = flask.request.json['payment']
+    payday = flask.request.json['payday']
+    cur.execute("insert into position (position, payment, payday) values ('"+position+"', '"+payment+"', '"+payday+"')")
+    conn.commit()
+    return "Done!"
 
 
-@app.route("/<string:db>/tools/db/maintain/<string:id>", methods=['PUT'])
-def update(db, id):
+@app.route("/tools/db/maintain/<string:id>", methods=['PUT'])
+def update(id):
     if not flask.request.json or not 'name' in flask.request.json or not 'surname' in flask.request.json:
         flask.abort(400)
-    name = flask.request.json['name']
     surname = flask.request.json['surname']
-    cur.execute("update " + db + " set column_1 = '"+name+"', column_2 = '"+surname+"' where id = " + id)
+    name = flask.request.json['name']
+    patronymic = flask.request.json['patronymic']
+    house = flask.request.json['house']
+    cur.execute("update worker set surname = '"+surname+"', name = '"+name+"', patronymic = '"+patronymic+"', house = '"+house+"' where id = "+id)
     conn.commit()
-    cur.execute("select * from "+db)
-    result = cur.fetchall()
-    final = {}
-    for a in range(len(result)):
-        final.update({result[a][0]: {"name": result[a][1], "surname": result[a][2]}})
-    return flask.jsonify({"items": final})
-
-
-
-@app.route("/<string:db>/tools/db/maintain/<string:id>", methods=['DELETE'])
-def delete(db, id):
-    cur.execute("delete from "+db+" where id = "+id)
+    schedule = flask.request.json['schedule']
+    worktime = flask.request.json['worktime']
+    phonenumber = flask.request.json['phonenumber']
+    cur.execute("update worker set schedule = '"+schedule+"', worktime = '"+worktime+"', phonenumber = '"+phonenumber+"' where id = "+id)
     conn.commit()
-    cur.execute("select * from "+db)
-    result = cur.fetchall()
-    final = {}
-    for a in range(len(result)):
-        final.update({result[a][0]: {"name": result[a][1], "surname": result[a][2]}})
-    return flask.jsonify({"items": final})
+    position = flask.request.json['position']
+    payment = flask.request.json['payment']
+    payday = flask.request.json['payday']
+    cur.execute("update worker set position = '"+position+"', payment = '"+payment+"', payday = '"+payday+"' where id = "+id)
+    conn.commit()
+    return "Done!"
 
 
+@app.route("/tools/db/maintain/<string:id>", methods=['DELETE'])
+def delete(id):
+    cur.execute("delete from worker where id = "+id)
+    conn.commit()
+    return "Done!"
+
+
+"""
 @app.route("/tools/db/createtable/worker")
 def make_table1():
     cur.execute("create table IF NOT EXISTS worker (id serial primary key, surname text, name text, patronymic text, house text)")
@@ -99,15 +136,7 @@ def make_table3():
     cur.execute("create table IF NOT EXISTS position (workerid int, position text, payment text, payday text, foreign key (workerid) references worker(id))")
     conn.commit()
     return "Done! Table {} was created."
-
-
-
-@app.route("/tools/db/showalltables")
-def show_tables():
-    cur.execute("SELECT * FROM pg_catalog.pg_tables")
-    result = cur.fetchall()
-    return flask.jsonify({'items': str([item[1] for item in result[:-69]])})
-
+"""
 
 if __name__ == "__main__":
     app.run()
