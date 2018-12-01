@@ -139,7 +139,7 @@ def make_table3():
 
 
 @app.route("/tools/db/deletetable/<string:db>")
-def make_table3(db):
+def delete_table(db):
     cur.execute("drop table "+db)
     conn.commit()
     return "Done!"
