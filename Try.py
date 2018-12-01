@@ -12,11 +12,11 @@ app = flask.Flask(__name__)
 
 @app.route("/")
 def welcome():
-    message = "Bbonjoure! C'est mon application. Дальше не знаю. \n Ссылки для манимуляций с датабазой: \n     https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, POST]) \n    https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, PUT, DELETE])"
+    message = "Bonjoure! C'est mon application. Дальше не знаю. \n Ссылки для манимуляций с датабазой: \n     https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, POST]) \n    https://romanrestplz.herokuapp.com/tools/db/maintain/<database name> ([GET, PUT, DELETE])"
     return message
 
 
-@app.route("/tools/db/maintain/<string:db>", methods=["GET"])
+@app.route("/<string:db>/tools/db/maintain", methods=["GET"])
 def get(db):
     cur.execute("select * from "+db)
     result = cur.fetchall()
@@ -26,7 +26,7 @@ def get(db):
     return flask.jsonify({"items": final})
 
 
-@app.route("/tools/db/maintain/<string:db>/<int:id>", methods=["GET"])
+@app.route("/<string:db>/tools/db/maintain/<int:id>", methods=["GET"])
 def get_by_id(db, id):
     cur.execute("select * from "+db+" where id = " + str(id))
     result = cur.fetchall()
@@ -35,7 +35,7 @@ def get_by_id(db, id):
     return flask.jsonify({"items": final})
 
 
-@app.route("/tools/db/maintain/<string:db>", methods=['POST'])
+@app.route("/<string:db>/tools/db/maintain", methods=['POST'])
 def insert_into(db):
     if not flask.request.json or not 'name' in flask.request.json or not 'surname' in flask.request.json:
         flask.abort(400)
@@ -51,7 +51,7 @@ def insert_into(db):
     return flask.jsonify({"items": final})
 
 
-@app.route("/tools/db/maintain/<string:db>/<string:id>", methods=['PUT'])
+@app.route("/<string:db>/tools/db/maintain/<string:id>", methods=['PUT'])
 def update(db, id):
     if not flask.request.json or not 'name' in flask.request.json or not 'surname' in flask.request.json:
         flask.abort(400)
@@ -68,11 +68,11 @@ def update(db, id):
 
 
 
-@app.route("/tools/db/maintain/<string:name>/<string:id>", methods=['DELETE'])
-def delete(name, id):
-    cur.execute("delete from "+name+" where id = "+id)
+@app.route("/<string:db>/tools/db/maintain/<string:id>", methods=['DELETE'])
+def delete(db, id):
+    cur.execute("delete from "+db+" where id = "+id)
     conn.commit()
-    cur.execute("select * from "+name)
+    cur.execute("select * from "+db)
     result = cur.fetchall()
     final = {}
     for a in range(len(result)):
@@ -80,18 +80,26 @@ def delete(name, id):
     return flask.jsonify({"items": final})
 
 
-@app.route("/tools/db/createtable/<string:name>")
-def make_table(name):
-    cur.execute("create table IF NOT EXISTS " + name + " (id serial primary key, column_1 text, column_2 text)")
+@app.route("/tools/db/createtable/worker")
+def make_table1():
+    cur.execute("create table IF NOT EXISTS worker (id serial primary key, surname text, name text, patronymic text, house text)")
     conn.commit()
-    return "Done! Table {} was created.".format(name)
+    return "Done! Table {} was created."
 
 
-@app.route("/tools/db/deletetable/<string:name>")
-def delete_table(name):
-    cur.execute("drop table "+name)
+@app.route("/tools/db/createtable/schedule")
+def make_table2():
+    cur.execute("create table IF NOT EXISTS schedule (workerid int, schedule text, worktime text, phonenumber text, foreign key (workerid) references worker(id))")
     conn.commit()
-    return "Done! Table {} was deleted.".format(name)
+    return "Done! Table {} was created."
+
+
+@app.route("/tools/db/createtable/position")
+def make_table3():
+    cur.execute("create table IF NOT EXISTS position (workerid int, position text, payment text, payday text, foreign key (workerid) references worker(id))")
+    conn.commit()
+    return "Done! Table {} was created."
+
 
 
 @app.route("/tools/db/showalltables")
