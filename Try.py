@@ -17,7 +17,7 @@ def welcome():
 
 
 @app.route("/tools/db/tablecontent/<string:db>", methods=["GET"])
-def get(db):
+def view(db):
     final = {}
     if db == "worker":
         cur.execute("select * from " + db)
