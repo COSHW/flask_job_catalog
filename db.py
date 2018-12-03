@@ -26,10 +26,10 @@ def view(db):
         cur.execute("select * from " + db)
         result = cur.fetchall()
         for a in range(len(result)):
-            final.update({result[a][0]: {"schedule": result[a]}})
+            final.update({result[a][0]: {"schedule": result[a][1]}})
         return flask.jsonify({"schedules": final})
     elif db == "position":
-        cur.execute("select * from " + db)
+        cur.execute("select * from " + db + "where")
         result = cur.fetchall()
         for a in range(len(result)):
             final.update({result[a][0]: {"position": result[a][1]}})
@@ -57,7 +57,7 @@ def get_by_id(id):
     cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, schedule.schedule, worktime.worktime, position.position from worker inner join schedule on worker.id=schedule.workerid inner join worktime on worker.id=worktime.workerid inner join position on worker.position=position.id where id = " + str(id))
     result = cur.fetchall()
     final = {}
-    final.update({result[0][0]: {"surname": result[0][1], "name": result[0][2], "patronymic": result[0][3], "house": result[0][4], "phonenumber": result[0][5], "payment": result[a][6], "payday": result[a][7], "schedule": result[a][8], "worktime": result[a][9], "position": result[a][10]}})
+    final.update({result[0][0]: {"surname": result[0][1], "name": result[0][2], "patronymic": result[0][3], "house": result[0][4], "phonenumber": result[0][5], "payment": result[0][6], "payday": result[0][7], "schedule": result[0][8], "worktime": result[0][9], "position": result[0][10]}})
     return flask.jsonify({"items": final})
 
 
@@ -72,6 +72,7 @@ def insert_into():
     payment = flask.request.json['payment']
     payday = flask.request.json['payday']
     house = flask.request.json['house']
+    print(worktime)
     cur.execute("insert into worker (surname, name, patronymic, house, phonenumber, payment, payday, position) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"', '"+phonenumber+"', '"+payment+"', '"+payday+"', "+str(position)+")")
     conn.commit()
     for item in schedule:
@@ -81,6 +82,7 @@ def insert_into():
         cur.execute("insert into worktime (workerid, worktime) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+item+"')")
         conn.commit()
     return "Done!"
+
 
 """
 def update(id):
@@ -105,6 +107,7 @@ def update(id):
     conn.commit()
     return "Done!"
 """
+
 
 def delete(id):
     cur.execute("delete from schedule where id = "+id)
