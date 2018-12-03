@@ -16,6 +16,7 @@ def welcome():
 
 def view(db):
     final = {}
+    things = ""
     if db == "worker":
         cur.execute("select * from " + db)
         result = cur.fetchall()
@@ -25,9 +26,12 @@ def view(db):
     elif db == "schedule":
         cur.execute("select * from " + db)
         result = cur.fetchall()
-        print(result)
         for a in range(len(result)):
-            final.update({result[a][0]: {"schedule": [items for items in result[a][1]]}})
+            if result[a][0] == result[a+1][0]:
+                things = things + result[a][1] + ", "
+            else:
+                final.update({result[a][0]: {"schedule": things[:-2]}})
+                things = ""
         return flask.jsonify({"schedules": final})
     elif db == "position":
         cur.execute("select * from " + db + "where")
@@ -39,7 +43,11 @@ def view(db):
         cur.execute("select * from " + db)
         result = cur.fetchall()
         for a in range(len(result)):
-            final.update({result[a][0]: {"worktime": [items for items in result[a][1]]}})
+            if result[a][0] == result[a+1][0]:
+                things = things + result[a][1] + ", "
+            else:
+                final.update({result[a][0]: {"worktime": things[:-2]}})
+                things = ""
         return flask.jsonify({"worktime": final})
     else:
         return "No table called {}".format(db)
