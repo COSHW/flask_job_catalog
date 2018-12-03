@@ -62,9 +62,21 @@ def view(db):
 def get():
     cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, schedule.schedule, worktime.worktime, position.position from worker inner join schedule on worker.id=schedule.workerid inner join worktime on worker.id=worktime.workerid inner join position on worker.position=position.id")
     result = cur.fetchall()
+    print(result)
+    schedule = ""
+    worktime = ""
     final = {}
     for a in range(len(result)):
-        final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4], "phonenumber": result[a][5], "payment": result[a][6], "payday": result[a][7], "schedule": [items for items in result[a][8]], "worktime": [items for items in result[a][9]], "position": result[a][10]}})
+        for b in range(len(result)):
+            try:
+                if result[b][0] == result[b + 1][0]:
+                    schedule = schedule + result[b][1] + ", "
+                else:
+                    final.update({result[b][0]: {"schedule": schedule[:-2]}})
+                    schedule = ""
+            except:
+                final.update({result[b][0]: {"schedule": schedule[:-2]}})
+        final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4], "phonenumber": result[a][5], "payment": result[a][6], "payday": result[a][7], "schedule": schedule, "worktime": worktime, "position": result[a][10]}})
     return flask.jsonify({"workers": final})
 
 
