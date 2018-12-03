@@ -72,14 +72,13 @@ def insert_into():
     payment = flask.request.json['payment']
     payday = flask.request.json['payday']
     house = flask.request.json['house']
-    print(worktime)
     cur.execute("insert into worker (surname, name, patronymic, house, phonenumber, payment, payday, position) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"', '"+phonenumber+"', '"+payment+"', '"+payday+"', "+str(position)+")")
     conn.commit()
-    for item in schedule:
-        cur.execute("insert into schedule (workerid, schedule) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+item+"')")
+    for a in range(len(schedule)):
+        cur.execute("insert into schedule (workerid, schedule) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+schedule[a]+"')")
         conn.commit()
-    for item in worktime:
-        cur.execute("insert into worktime (workerid, worktime) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+item+"')")
+    for a in range(len(worktime)):
+        cur.execute("insert into worktime (workerid, worktime) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+worktime[a]+"')")
         conn.commit()
     return "Done!"
 
@@ -110,7 +109,7 @@ def update(id):
 
 
 def delete(id):
-    cur.execute("delete from schedule where id = "+id)
+    cur.execute("delete from schedule where workerid = "+id)
     cur.execute("delete from worktime where workerid = "+id)
     cur.execute("delete from worker where workerid = "+id)
     conn.commit()
