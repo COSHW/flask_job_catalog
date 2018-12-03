@@ -26,7 +26,7 @@ def view(db):
         cur.execute("select * from " + db)
         result = cur.fetchall()
         for a in range(len(result)):
-            final.update({result[a][0]: {"schedule": result[a][1]}})
+            final.update({result[a][0]: {"schedule": result[a]}})
         return flask.jsonify({"schedules": final})
     elif db == "position":
         cur.execute("select * from " + db)
@@ -107,7 +107,7 @@ def update(id):
 """
 
 def delete(id):
-    cur.execute("delete from schedual where id = "+id)
+    cur.execute("delete from schedule where id = "+id)
     cur.execute("delete from worktime where workerid = "+id)
     cur.execute("delete from worker where workerid = "+id)
     conn.commit()
