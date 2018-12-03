@@ -43,7 +43,6 @@ def delete(id):
     return db.delete(id)
 
 
-"""
 @app.route("/tools/db/createtable/worker")
 def make_table1():
     return db.make_table_worker()
@@ -62,7 +61,6 @@ def make_table3():
 @app.route("/tools/db/createtable/worktime")
 def make_table4():
     return db.make_table_worktime()
-"""
 
 
 @app.route("/tools/db/deletetable/<string:db>")
