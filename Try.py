@@ -68,10 +68,5 @@ def delete_table(db):
     return db.delete_table()
 
 
-@app.route("/try")
-def try1():
-    return db.try1()
-
-
 if __name__ == "__main__":
     app.run()

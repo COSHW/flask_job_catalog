@@ -26,7 +26,7 @@ def view(db):
         cur.execute("select * from " + db)
         result = cur.fetchall()
         for a in range(len(result)):
-            final.update({result[a][0]: {"schedule": result[a][1]}})
+            final.update({result[a][0]: {"schedule": [items for items in result[a][1]]}})
         return flask.jsonify({"schedules": final})
     elif db == "position":
         cur.execute("select * from " + db + "where")
@@ -38,7 +38,7 @@ def view(db):
         cur.execute("select * from " + db)
         result = cur.fetchall()
         for a in range(len(result)):
-            final.update({result[a][0]: {"worktime": result[a][1]}})
+            final.update({result[a][0]: {"worktime": [items for items in result[a][1]]}})
         return flask.jsonify({"worktime": final})
     else:
         return "No table called {}".format(db)
@@ -49,7 +49,7 @@ def get():
     result = cur.fetchall()
     final = {}
     for a in range(len(result)):
-        final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4], "phonenumber": result[a][5], "payment": result[a][6], "payday": result[a][7], "schedule": result[a][8], "worktime": result[a][9], "position": result[a][10]}})
+        final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4], "phonenumber": result[a][5], "payment": result[a][6], "payday": result[a][7], "schedule": [items for items in result[a][8]], "worktime": [items for items in result[a][9]], "position": result[a][10]}})
     return flask.jsonify({"workers": final})
 
 
@@ -157,10 +157,4 @@ def make_table_position():
         cur.execute("insert into position (position) values (%s)", (item, ))
     return "Done! Table position was created."
 
-
-def try1():
-    cur.execute("select * from worktime")
-    result = cur.fetchall()
-    print(result)
-    return str(result[0])
 
