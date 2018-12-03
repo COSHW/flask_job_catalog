@@ -25,6 +25,7 @@ def view(db):
     elif db == "schedule":
         cur.execute("select * from " + db)
         result = cur.fetchall()
+        print(result)
         for a in range(len(result)):
             final.update({result[a][0]: {"schedule": [items for items in result[a][1]]}})
         return flask.jsonify({"schedules": final})
