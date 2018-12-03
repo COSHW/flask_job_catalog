@@ -161,5 +161,5 @@ def make_table_position():
 def try1():
     cur.execute("select * from worktime")
     result = cur.fetchall()
-    return result
+    return result[0]
 
