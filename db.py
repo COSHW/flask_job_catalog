@@ -72,7 +72,7 @@ def insert_into():
     payment = flask.request.json['payment']
     payday = flask.request.json['payday']
     house = flask.request.json['house']
-    cur.execute("insert into worker (surname, name, patronymic, house, phonenumber, payment, payday, position) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"', '"+phonenumber+"', '"+payment+"', '"+payday+"', "+position+")")
+    cur.execute("insert into worker (surname, name, patronymic, house, phonenumber, payment, payday, position) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"', '"+phonenumber+"', '"+payment+"', '"+payday+"', "+str(position)+")")
     conn.commit()
     for item in schedule:
         cur.execute("insert into schedule (workerid, schedule) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+item+"')")
