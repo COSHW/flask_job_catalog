@@ -111,7 +111,7 @@ def update(id):
 def delete(id):
     cur.execute("delete from schedule where workerid = "+id)
     cur.execute("delete from worktime where workerid = "+id)
-    cur.execute("delete from worker where workerid = "+id)
+    cur.execute("delete from worker where id = "+id)
     conn.commit()
     return "Done!"
 
@@ -157,4 +157,9 @@ def make_table_position():
         cur.execute("insert into position (position) values (%s)", (item, ))
     return "Done! Table position was created."
 
+
+def try1():
+    cur.execute("select * from worktime")
+    result = cur.fetchall()
+    return result
 
