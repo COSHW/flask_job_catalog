@@ -31,9 +31,11 @@ def view(db):
                 if result[a][0] == result[a+1][0]:
                     things = things + result[a][1] + ", "
                 else:
+                    things = things + result[a][1] + ", "
                     final.update({result[a][0]: {"schedule": things[:-2]}})
                     things = ""
             except:
+                things = things + result[a][1] + ", "
                 final.update({result[a][0]: {"schedule": things[:-2]}})
         return flask.jsonify({"schedules": final})
     elif db == "position":
@@ -50,9 +52,11 @@ def view(db):
                 if result[a][0] == result[a+1][0]:
                     things = things + result[a][1] + ", "
                 else:
+                    things = things + result[a][1] + ", "
                     final.update({result[a][0]: {"worktime": things[:-2]}})
                     things = ""
             except:
+                things = things + result[a][1] + ", "
                 final.update({result[a][0]: {"worktime": things[:-2]}})
         return flask.jsonify({"worktime": final})
     else:
@@ -60,23 +64,43 @@ def view(db):
 
 
 def get():
+    schedule = ""
+    schedules = []
+    cur.execute("select * from schedule")
+    result = cur.fetchall()
+    for a in range(len(result)):
+        try:
+            if result[a][0] == result[a + 1][0]:
+                schedule = schedule + result[a][1] + ", "
+            else:
+                schedule = schedule + result[a][1]
+                schedules.append(schedule)
+                schedules = ""
+        except:
+            schedule = schedule + result[a][1]
+            schedules.append(schedule)
+
+    worktime = ""
+    worktimes = []
+    cur.execute("select * from worktime")
+    result = cur.fetchall()
+    for a in range(len(result)):
+        try:
+            if result[a][0] == result[a + 1][0]:
+                worktime = worktime + result[a][1] + ", "
+            else:
+                worktime = worktime + result[a][1]
+                worktimes.append(worktime)
+                worktime = ""
+        except:
+            worktime = worktime + result[a][1]
+            worktimes.append(worktime)
+
     cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, schedule.schedule, worktime.worktime, position.position from worker inner join schedule on worker.id=schedule.workerid inner join worktime on worker.id=worktime.workerid inner join position on worker.position=position.id")
     result = cur.fetchall()
-    print(result)
-    schedule = ""
-    worktime = ""
     final = {}
     for a in range(len(result)):
-        for b in range(len(result)):
-            try:
-                if result[b][0] == result[b + 1][0]:
-                    schedule = schedule + result[b][1] + ", "
-                else:
-                    final.update({result[b][0]: {"schedule": schedule[:-2]}})
-                    schedule = ""
-            except:
-                final.update({result[b][0]: {"schedule": schedule[:-2]}})
-        final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4], "phonenumber": result[a][5], "payment": result[a][6], "payday": result[a][7], "schedule": schedule, "worktime": worktime, "position": result[a][10]}})
+        final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4], "phonenumber": result[a][5], "payment": result[a][6], "payday": result[a][7], "schedule": schedules[a], "worktime": worktimes[a], "position": result[a][10]}})
     return flask.jsonify({"workers": final})
 
 
