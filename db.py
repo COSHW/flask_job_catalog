@@ -122,7 +122,7 @@ def get_by_id(id):
         worktime = worktime + result[a][1] + ", "
     worktimes.append(worktime[:-2])
 
-    cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, position.position from worker where worker.id = %s inner join position on worker.position=position.id", (id, ))
+    cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, position.position from worker inner join position on worker.position=position.id where worker.id = %s", (id, ))
     result = cur.fetchall()
     final = {}
     final.update({result[0][0]: {"surname": result[0][1], "name": result[0][2], "patronymic": result[0][3], "house": result[0][4], "phonenumber": result[0][5], "payment": result[0][6], "payday": result[0][7], "schedule": schedules[0], "worktime": worktimes[0], "position": result[0][8]}})
