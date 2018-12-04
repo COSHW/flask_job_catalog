@@ -75,7 +75,7 @@ def get():
             else:
                 schedule = schedule + result[a][1]
                 schedules.append(schedule)
-                schedules = ""
+                schedule = ""
         except:
             schedule = schedule + result[a][1]
             schedules.append(schedule)
