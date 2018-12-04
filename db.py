@@ -100,11 +100,8 @@ def get():
     result = cur.fetchall()
     final = {}
 
-    print(schedules)
-    print(worktimes)
-    print(result)
     for a in range(len(result)):
-        final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4], "phonenumber": result[a][5], "payment": result[a][6], "payday": result[a][7], "schedule": schedules[a], "worktime": worktimes[a], "position": result[a][10]}})
+        final.update({result[a][0]: {"surname": result[a][1], "name": result[a][2], "patronymic": result[a][3], "house": result[a][4], "phonenumber": result[a][5], "payment": result[a][6], "payday": result[a][7], "schedule": schedules[a], "worktime": worktimes[a], "position": result[a][8]}})
     return flask.jsonify({"workers": final})
 
 
