@@ -106,11 +106,27 @@ def get():
 
 
 def get_by_id(id):
-    cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, schedule.schedule, worktime.worktime, position.position from worker inner join schedule on worker.id=schedule.workerid inner join worktime on worker.id=worktime.workerid inner join position on worker.position=position.id where id = " + str(id))
+    schedule = ""
+    schedules = []
+    cur.execute("select * from schedule where workerid = %s", (id, ))
+    result = cur.fetchall()
+    for a in range(len(result)):
+        schedule = schedule + result[a][1] + ", "
+    schedules.append(schedule[:-2])
+
+    worktime = ""
+    worktimes = []
+    cur.execute("select * from worktime where workerid = %s", (id, ))
+    result = cur.fetchall()
+    for a in range(len(result)):
+        worktime = worktime + result[a][1] + ", "
+    worktimes.append(worktime[:-2])
+
+    cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, position.position from worker inner join position on worker.position=position.id where id = %s", (id, ))
     result = cur.fetchall()
     final = {}
-    final.update({result[0][0]: {"surname": result[0][1], "name": result[0][2], "patronymic": result[0][3], "house": result[0][4], "phonenumber": result[0][5], "payment": result[0][6], "payday": result[0][7], "schedule": result[0][8], "worktime": result[0][9], "position": result[0][10]}})
-    return flask.jsonify({"items": final})
+    final.update({result[0][0]: {"surname": result[0][1], "name": result[0][2], "patronymic": result[0][3], "house": result[0][4], "phonenumber": result[0][5], "payment": result[0][6], "payday": result[0][7], "schedule": schedules[0], "worktime": worktimes[0], "position": result[0][8]}})
+    return flask.jsonify({"workers": final})
 
 
 def insert_into():
