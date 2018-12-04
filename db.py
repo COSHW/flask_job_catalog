@@ -96,7 +96,7 @@ def get():
             worktime = worktime + result[a][1]
             worktimes.append(worktime)
 
-    cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, schedule.schedule, worktime.worktime, position.position from worker inner join schedule on worker.id=schedule.workerid inner join worktime on worker.id=worktime.workerid inner join position on worker.position=position.id")
+    cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, position.position from worker inner join position on worker.position=position.id")
     result = cur.fetchall()
     final = {}
     for a in range(len(result)):
