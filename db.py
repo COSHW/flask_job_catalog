@@ -150,7 +150,7 @@ def insert_into():
         conn.commit()
     return "Done!"
 
-
+"""
 def update(id):
     surname = flask.request.json['surname']
     name = flask.request.json['name']
@@ -176,7 +176,7 @@ def update(id):
         cur.execute("insert into worktime (workerid, worktime) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+worktime[a]+"')")
         conn.commit()
     return "Done!"
-
+"""
 
 def delete(id):
     cur.execute("delete from schedule where workerid = "+id)
