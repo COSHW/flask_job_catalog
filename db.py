@@ -151,29 +151,31 @@ def insert_into():
     return "Done!"
 
 
-"""
 def update(id):
     surname = flask.request.json['surname']
     name = flask.request.json['name']
     patronymic = flask.request.json['patronymic']
     house = flask.request.json['house']
-    cur.execute(
-        "update worker set surname = '" + surname + "', name = '" + name + "', patronymic = '" + patronymic + "', house = '" + house + "' where id = " + id)
-    conn.commit()
     schedule = flask.request.json['schedule']
     worktime = flask.request.json['worktime']
     phonenumber = flask.request.json['phonenumber']
-    cur.execute(
-        "update worker set schedule = '" + schedule + "', worktime = '" + worktime + "', phonenumber = '" + phonenumber + "' where id = " + id)
-    conn.commit()
     position = flask.request.json['position']
     payment = flask.request.json['payment']
     payday = flask.request.json['payday']
     cur.execute(
-        "update worker set position = '" + position + "', payment = '" + payment + "', payday = '" + payday + "' where id = " + id)
+        "update worker set surname = '" + surname + "', name = '" + name + "', patronymic = '" + patronymic + "', house = '" + house + "', phonenumber = '"+phonenumber+"', payment = '"+payment+"', payday = '"+payday+"', position = "+str(position)+" where id = " + id)
     conn.commit()
+    cur.execute("delete from schedule where workerid = " + id)
+    conn.commit()
+	for a in range(len(schedule)):
+		cur.execute("insert into schedule (workerid, schedule) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+schedule[a]+"')")
+		conn.commit()
+    cur.execute("delete from worktime where workerid = " + id)
+    conn.commit()
+	for a in range(len(worktime)):
+        cur.execute("insert into worktime (workerid, worktime) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+worktime[a]+"')")
+        conn.commit()
     return "Done!"
-"""
 
 
 def delete(id):
