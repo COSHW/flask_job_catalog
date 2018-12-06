@@ -7,11 +7,24 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
+chatlog = [{"Система:": "Впишите свой ник в окно ниже\n"}]
+
 
 
 def welcome():
     message = "Bonjoure! C'est mon application. Дальше не знаю."
     return message
+
+
+def chat_get():
+    return tuple(chatlog)
+
+
+def chat_post():
+    nick = flask.request.json['nick']
+    message = flask.request.json['message']
+    chatlog.append({nick: message})
+    return tuple(chatlog)
 
 
 def view(db):

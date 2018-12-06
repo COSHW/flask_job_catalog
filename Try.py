@@ -9,6 +9,18 @@ def welcome():
     return db.welcome()
 
 
+@app.route("/chat", methods=["GET"])
+def chat_get():
+    return db.chat_get()
+
+
+@app.route("/chat", methods=["POST"])
+def chat_post():
+    if not flask.request.json or not 'nick' in flask.request.json or not 'message' in flask.request.json:
+        flask.abort(400)
+    return db.chat_post()
+
+
 @app.route("/tools/db/tablecontent/<string:table>", methods=["GET"])
 def view(table):
     return db.view(table)
