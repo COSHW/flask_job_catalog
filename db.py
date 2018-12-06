@@ -7,7 +7,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
-chatlog = {"1": [{"nick": "Система"}, {"message": "Впишите свой ник в окно ниже"}]}
+chatlog = ["Система: Впишите свой ник в окно ниже"]
 
 
 def welcome():
@@ -22,7 +22,7 @@ def chat_get():
 def chat_post():
     nick = flask.request.json['nick']
     message = flask.request.json['message']
-    chatlog.update({str(len(chatlog)+1): [{"nick": nick}, {"message": message}]})
+    chatlog.append(nick+": "+message)
     return flask.jsonify(chatlog)
 
 
