@@ -7,7 +7,6 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
-chatlog = {"0": {"nick": "Система", "message": "Впишите свое сообщение в окно ниже и нажмите отправить."}}
 
 
 def welcome():
@@ -16,14 +15,25 @@ def welcome():
 
 
 def chat_get():
-    return flask.jsonify(chatlog)
+    final = {}
+    cur.execute("select * from chat")
+    result = cur.fetchall()
+    for i in range(len(result)):
+        final.update({str(i+1): {'nick': result[i][1], 'message': result[i][2]}})
+    return flask.jsonify(final)
 
 
 def chat_post():
+    final = {}
     nick = flask.request.json['nick']
     message = flask.request.json['message']
-    chatlog.update({str(len(chatlog)): {"nick": nick, "message": message}})
-    return flask.jsonify(chatlog)
+    cur.execute("insert into chat (nick, message) values (%s, %s)", (nick, message))
+    conn.commit()
+    cur.execute("select * from chat")
+    result = cur.fetchall()
+    for i in range(len(result)):
+        final.update({str(i+1): {'nick': result[i][1], 'message': result[i][2]}})
+    return flask.jsonify(final)
 
 
 def view(db):
@@ -240,3 +250,11 @@ def make_table_position():
     return "Done! Table position was created."
 
 
+def reset():
+    cur.execute("drop table if exists chat")
+    conn.commit()
+    cur.execute("create table chat (id serial primary key, nick text, message text)")
+    conn.commit()
+    cur.execute("insert into chat (nick, message) values ('Система', 'Введите своё сообщение в поле ниже и нажмите отправить')")
+    conn.commit()
+    return "Done!"

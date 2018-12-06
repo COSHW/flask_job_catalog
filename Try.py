@@ -19,6 +19,11 @@ def chat_post():
     return db.chat_post()
 
 
+@app.route("/chat", methods=["DELETE"])
+def chat_reset():
+    return db.reset()
+
+
 @app.route("/tools/db/tablecontent/<string:table>", methods=["GET"])
 def view(table):
     return db.view(table)
