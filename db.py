@@ -7,8 +7,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 cur = conn.cursor()
-chatlog = [{"Система:": "Впишите свой ник в окно ниже\n"}]
-
+chatlog = [["Система", "Впишите свой ник в окно ниже"]]
 
 
 def welcome():
