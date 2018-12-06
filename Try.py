@@ -16,8 +16,6 @@ def chat_get():
 
 @app.route("/chat", methods=["POST"])
 def chat_post():
-    if not flask.request.json or not 'nick' in flask.request.json or not 'message' in flask.request.json:
-        flask.abort(400)
     return db.chat_post()
 
 
