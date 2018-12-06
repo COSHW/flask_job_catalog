@@ -17,14 +17,14 @@ def welcome():
 
 
 def chat_get():
-    return tuple(chatlog)
+    return flask.jsonify(chatlog)
 
 
 def chat_post():
     nick = flask.request.json['nick']
     message = flask.request.json['message']
     chatlog.append({nick: message})
-    return tuple(chatlog)
+    return flask.jsonify(chatlog)
 
 
 def view(db):
