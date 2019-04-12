@@ -1,70 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-<title> Новостная таблица </title>
-<meta charset="utf-8">
+<!doctype html>
+<html>
 <head>
-  <style>
-      html, body {
-  height: 100%;
-  margin: 0;
+<meta charset="utf-8">
+<title>Untitled Page</title>
+<meta name="generator" content="WYSIWYG Web Builder 14 - http://www.wysiwygwebbuilder.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="Untitled1.css" rel="stylesheet">
+<link href="index.css" rel="stylesheet">
+<script src="jquery-1.12.4.min.js"></script>
+<script src="searchindex.js"></script>
+<script src="wb.sitesearch.min.js"></script>
+<script>
+var features = 'toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes,status=no,left=,top=,width=,height=';
+function searchPage(features)
+{
+   var element = document.getElementById('SiteSearch1');
+   window.open('sitesearch1-results.html?q='+encodeURIComponent(element.value), '', features);
+   return false;
 }
-      .myBox {
-          background-color: #006666;
-          color: #e6ffff;
-          width: 100%;
-          height: 100%;
-          text-align: center;
-          margin: 0 auto;
-          overflow:hidden;
-}
-
-.myBox h1 {
-  font-family: Arial, sans-serif;
-  font-size: 30px;
-  color: #DDCCEE;
-
-}
-
-.myBox button {
-  width:70px;
-  height: 30px;
-  background-color: steelblue;
-  margin: 3px;
-}
-
-::-webkit-scrollbar {
-width: 12px;
-height: 12px;
-}
-
-::-webkit-scrollbar-track {
-background: #f5f5f5;
-border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-border-radius: 10px;
-background: #ccc;
-}
-
-::-webkit-scrollbar-thumb:hover {
-background: #999;
-}
-.output {
-  display: inline-block;
-}
-  </style>
+</script>
+<script>
+$(document).ready(function()
+{
+   searchParseURL('SiteSearch1');
+});
+</script>
 </head>
 <body>
-    <div class="myBox">
-      <h1>Таблица новостей</h1>
-        <form action="{{url_for('success')}}" method="POST">
-          <button type="submit"> Запрос </button>
-        </form>
-      <div class="output">
-        {{text|safe}}
-        {% include btn ignore missing %}
-      </div>
-  </div>
+<div id="FlexGrid1">
+<div class="header">
+<div id="wb_Image2" style="display:inline-block;width:129px;z-index:0;">
+<img src="images/business-and-marketing-glyph-18-512.png" id="Image2" alt="">
+</div>
+</div>
+<div class="profile">
+<div id="wb_Text15">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Фамилия:</span>
+</div>
+<input type="text" id="Editbox17" style="display:block;width:347px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="&#1048;&#1085;&#1074;&#1072;&#1085;&#1086;&#1074;">
+</div>
+<div class="profile2">
+<div id="wb_Text16">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Код:</span>
+</div>
+<input type="text" id="Editbox18" style="display:block;width:347px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="0123">
+</div>
+<div class="profileButton">
+<input type="submit" id="Button4" name="" value="Вход" style="display:block;width:180px;height:25px;z-index:5;">
+</div>
+<div class="main1">
+<div id="wb_Heading1" style="display:inline-block;width:347px;z-index:6;">
+<h1 id="Heading1"><br>Найти человека</h1>
+</div>
+<hr id="Line3" style="display:block;width:250px;">
+</div>
+<div class="line">
+<hr id="Line14" style="display:block;width:1px;">
+</div>
+<div class="main2">
+<div id="wb_Heading2" style="display:inline-block;width:350px;z-index:9;">
+<h1 id="Heading2"><br>Заполнить форму</h1>
+</div>
+<hr id="Line4" style="display:block;width:250px;">
+</div>
+<div class="qwe">
+<hr id="Line1" style="display:block;width:110px;">
+<div id="wb_RadioButton5" style="display:inline-block;width:20px;height:20px;z-index:12;">
+<input type="radio" id="RadioButton5" name="Name" value="on" style="display:block;"><label for="RadioButton5"></label>
+</div>
+<div id="wb_Text5">
+<span style="color:#000000;font-family:Arial;font-size:13px;"> Найти по ФИО</span>
+</div>
+<div id="wb_RadioButton4" style="display:inline-block;width:20px;height:20px;z-index:14;">
+<input type="radio" id="RadioButton4" name="Name" value="on" style="display:block;"><label for="RadioButton4"></label>
+</div>
+<div id="wb_Text4">
+<span style="color:#000000;font-family:Arial;font-size:13px;"> Найти по профессии</span>
+</div>
+<div id="wb_RadioButton3" style="display:inline-block;width:20px;height:20px;z-index:16;">
+<input type="radio" id="RadioButton3" name="Name" value="on" style="display:block;"><label for="RadioButton3"></label>
+</div>
+<div id="wb_Text3">
+<span style="color:#000000;font-family:Arial;font-size:13px;"> Найти по номеру телефона</span>
+</div>
+</div>
+<div class="l1">
+<div id="wb_Text6">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Фамилия</span>
+</div>
+<input type="text" id="Editbox9" style="display:block;width:454px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="&#1048;&#1085;&#1074;&#1072;&#1085;&#1086;&#1074;">
+<hr id="Line2" style="display:block;width:110px;">
+</div>
+<div class="l2">
+<div id="wb_Text7">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Имя</span>
+</div>
+<input type="text" id="Editbox10" style="display:block;width:454px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="&#1048;&#1074;&#1072;&#1085;">
+<hr id="Line5" style="display:block;width:110px;">
+</div>
+<div class="rr">
+<form name="SiteSearch1_form" id="SiteSearch1_form" role="search" accept-charset="UTF-8" style="display:inline" onsubmit="return searchPage(features)">
+<input type="text" id="SiteSearch1" style="display:block;width:522px;height:26px;" name="SiteSearch1" value="" spellcheck="false" placeholder="&#1055;&#1086;&#1080;&#1089;&#1082; &#1087;&#1086; &#1089;&#1072;&#1081;&#1090;&#1091;" role="searchbox"></form>
+</div>
+<div class="l3">
+<div id="wb_Text8">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Отчество</span>
+</div>
+<input type="text" id="Editbox11" style="display:block;width:454px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="&#1055;&#1077;&#1090;&#1088;&#1086;&#1074;&#1080;&#1095;">
+<hr id="Line6" style="display:block;width:110px;">
+</div>
+<div class="yy">
+<input type="button" id="Button1" onclick="window.location.href='C:/Users/COS/AppData/Local/Temp/preview/index.html';return false;" name="Search" value="Поиск" style="display:block;width:96px;height:25px;z-index:28;">
+</div>
+<div class="l4">
+<div id="wb_Text9">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Номер телефона</span>
+</div>
+<input type="text" id="Editbox12" style="display:block;width:454px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="79509009090">
+<hr id="Line7" style="display:block;width:110px;">
+</div>
+<div class="l5">
+<div id="wb_Text10">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Адрес</span>
+</div>
+<input type="text" id="Editbox13" style="display:block;width:454px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="&#1075;. &#1050;&#1072;&#1079;&#1072;&#1085;&#1100;, &#1091;&#1083;. &#1055;&#1091;&#1096;&#1082;&#1080;&#1085;&#1072; 15">
+<hr id="Line8" style="display:block;width:110px;">
+</div>
+<div class="l6">
+<div id="wb_Text11">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Профессия</span>
+</div>
+<input type="text" id="Editbox14" style="display:block;width:454px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="&#1055;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;&#1084;&#1080;&#1089;&#1090;">
+<hr id="Line9" style="display:block;width:110px;">
+</div>
+<div class="l7">
+<div id="wb_Text12">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Расписание</span>
+</div>
+<input type="text" id="Editbox15" style="display:block;width:454px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="&#1055;&#1085;,&#1042;&#1090;,&#1057;&#1088;,&#1063;&#1090;,&#1055;&#1090;,&#1057;&#1073;,&#1042;&#1089;">
+<hr id="Line10" style="display:block;width:110px;">
+</div>
+<div class="l8">
+<div id="wb_Text13">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Часы работы</span>
+</div>
+<input type="text" id="Editbox16" style="display:block;width:454px;height:37px;" name="Editbox9" value="" spellcheck="false" placeholder="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23">
+<hr id="Line11" style="display:block;width:110px;">
+</div>
+<div class="b">
+<hr id="Line12" style="display:block;width:249px;">
+<input type="button" id="Button2" onclick="window.location.href='C:/Users/COS/AppData/Local/Temp/preview/index.html';return false;" name="Submit" value="Отправить" style="display:block;width:195px;height:44px;z-index:45;">
+<hr id="Line13" style="display:block;width:249px;">
+</div>
+<div class="footer">
+<div id="wb_Text14">
+<span style="color:#000000;font-family:Arial;font-size:13px;">Something useful:<br><br><br><br><br></span>
+</div>
+</div>
+</div>
+
 </body>
 </html>
