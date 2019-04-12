@@ -1,11 +1,14 @@
 import flask
 import db
 
+
 app = flask.Flask(__name__)
 
 
 @app.route("/")
 def welcome():
+    for key, value in flask.request.form.items():
+        print("key: {0}, value: {1}".format(key, value))
     return flask.render_template("index.html")
 
 
