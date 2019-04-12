@@ -19,7 +19,7 @@ def chat_get():
 def chat_post():
     for key, value in flask.request.form.items():
         print("key: {0}, value: {1}".format(key, value))
-    return 123
+    return "PFT<FKB"
     # return db.chat_post()
 
 
