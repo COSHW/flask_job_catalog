@@ -7,8 +7,6 @@ app = flask.Flask(__name__)
 
 @app.route("/")
 def welcome():
-    for key, value in flask.request.form.items():
-        print("key: {0}, value: {1}".format(key, value))
     return flask.render_template("index.html")
 
 
@@ -19,7 +17,9 @@ def chat_get():
 
 @app.route("/chat", methods=["POST"])
 def chat_post():
-    return db.chat_post()
+    for key, value in flask.request.form.items():
+        print("key: {0}, value: {1}".format(key, value))
+    # return db.chat_post()
 
 
 @app.route("/chat", methods=["DELETE"])
