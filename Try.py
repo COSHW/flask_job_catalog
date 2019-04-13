@@ -14,6 +14,7 @@ def welcome():
 
 @app.route("/result")
 def result():
+    if flask.request.values.to_dict()
     info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain"))
     return flask.render_template("index2.html", table=info.to_html(index=False))
 
