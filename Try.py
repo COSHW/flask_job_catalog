@@ -30,9 +30,33 @@ def nextPage():
             return flask.render_template("index2.html", table=table.to_html(index=False))
 
         elif radio == "JOB":
-            info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
+            JOB = flask.request.values.to_dict()['FindBy']
+            info = json.loads(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
+            for item in info['workers']:
+                if info['workers'][item]['position'] == JOB:
+                    final.append([info['workers'][item]['surname'], info['workers'][item]['name'],
+                                  info['workers'][item]['patronymic'], info['workers'][item]['position'],
+                                  info['workers'][item]['phonenumber'], info['workers'][item]['house'],
+                                  info['workers'][item]['schedule'], info['workers'][item]['worktime'],
+                                  info['workers'][item]['payment'], info['workers'][item]['payday']])
+            table = pandas.DataFrame(final,
+                                     columns=["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес",
+                                              "Расписание", "Время работы", "Зарплата", "День выдачи"])
+            return flask.render_template("index2.html", table=table.to_html(index=False))
         elif radio == "PHONE":
-            info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
+            PHONE = flask.request.values.to_dict()['FindBy']
+            info = json.loads(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
+            for item in info['workers']:
+                if info['workers'][item]['phonenumber'] == PHONE:
+                    final.append([info['workers'][item]['surname'], info['workers'][item]['name'],
+                                  info['workers'][item]['patronymic'], info['workers'][item]['position'],
+                                  info['workers'][item]['phonenumber'], info['workers'][item]['house'],
+                                  info['workers'][item]['schedule'], info['workers'][item]['worktime'],
+                                  info['workers'][item]['payment'], info['workers'][item]['payday']])
+            table = pandas.DataFrame(final,
+                                     columns=["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес",
+                                              "Расписание", "Время работы", "Зарплата", "День выдачи"])
+            return flask.render_template("index2.html", table=table.to_html(index=False))
     elif flask.request.values.to_dict()['LastName'] != '':
         pass
     elif flask.request.values.to_dict()['REGLastName'] != '':
