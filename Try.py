@@ -30,11 +30,8 @@ def chat_post():
     #for key, value in flask.request.form.items():
     #    print("key: {0}, value: {1}".format(key, value))
     print("values: ")
-    print(flask.request.values)
-    print("args: ")
-    print(flask.request.args)
-    print("data: ")
-    print(flask.request.data)
+    print(flask.request.values[1][2])
+    print(flask.request.values[1][3])
     return "rrr"
     # return db.chat_post()
 
