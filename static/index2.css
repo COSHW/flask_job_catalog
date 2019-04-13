@@ -241,8 +241,8 @@ body
    flex-grow: 1;
    -webkit-flex-shrink: 1;
    flex-shrink: 1;
-   -webkit-align-self: auto;
-   align-self: auto;
+   -webkit-align-self: center;
+   align-self: center;
    padding: 0;
    margin: 0;
    text-align: center;
