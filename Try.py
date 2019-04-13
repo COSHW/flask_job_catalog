@@ -10,6 +10,16 @@ def welcome():
     return flask.render_template("index.html")
 
 
+@app.route("/result")
+def result():
+    return flask.render_template("index2.html")
+
+
+@app.route("/user/<string:last><int:phone>")
+def profile(last, phone):
+    return flask.render_template("index3.html")
+
+
 @app.route("/chat", methods=["GET"])
 def chat_get():
     return db.chat_get()
@@ -19,8 +29,7 @@ def chat_get():
 def chat_post():
     for key, value in flask.request.form.items():
         print("key: {0}, value: {1}".format(key, value))
-    return "PFT"
-    # return db.chat_post()
+    return db.chat_post()
 
 
 @app.route("/chat", methods=["DELETE"])

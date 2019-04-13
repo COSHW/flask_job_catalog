@@ -2,11 +2,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Untitled Page</title>
+<title>Профиль</title>
 <meta name="generator" content="WYSIWYG Web Builder 14 - http://www.wysiwygwebbuilder.com">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="Untitled3.css" rel="stylesheet">
-<link href="index3.css" rel="stylesheet">
+<link href="../static/Untitled3.css" rel="stylesheet">
+<link href="../static/index3.css" rel="stylesheet">
+<link rel="shortcut icon" type="image/x-icon" href="../static/ico.ico" />
 </head>
 <body>
 <div id="FlexGrid1">
@@ -18,7 +19,7 @@
 <div class="profile">
 <hr id="Line12" style="display:block;width:249px;">
 <div id="wb_Text15">
-<span style="color:#000000;font-family:Arial;font-size:13px;">фамилия и.&nbsp;&nbsp;&nbsp;&nbsp; </span>
+<span style="color:#000000;font-family:Arial;font-size:13px;">{{FIO|safe}}</span>
 </div>
 <input type="submit" id="Button1" name="Exit" value="Выйти" style="display:block;width:119px;height:27px;z-index:3;">
 <hr id="Line13" style="display:block;width:249px;">
@@ -33,7 +34,7 @@
 </div>
 <div class="code">
 <div id="wb_Text3">
-<span style="color:#000000;font-family:Arial;font-size:27px;">Код для входа в ваш профиль: <br><br></span>
+<span style="color:#000000;font-family:Arial;font-size:27px;">Код для входа в ваш профиль: {{code|safe}}<br><br></span>
 </div>
 </div>
 <div class="data1">
