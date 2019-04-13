@@ -28,7 +28,7 @@ $(document).ready(function()
 </script>
 </head>
 <body>
-<form action="/chat" method="post">
+<form>
 	<div id="FlexGrid1">
 	<div class="header">
 	<div id="wb_Image2" style="display:inline-block;width:129px;z-index:0;">
@@ -48,7 +48,9 @@ $(document).ready(function()
 	<input type="text" id="Editbox18" style="display:block;width:347px;height:37px;" name="Code" value="" spellcheck="false" placeholder="0123">
 	</div>
 	<div class="profileButton">
-	<input type="submit" id="Button4" name="" value="Вход" style="display:block;width:180px;height:25px;z-index:5;">
+	<form action="/chat" method="post">
+		<input type="submit" id="Button4" style="display:block;width:180px;height:25px;z-index:5;">
+	</form>
 	</div>
 
 <div class="main1">
@@ -113,7 +115,7 @@ $(document).ready(function()
 </div>
 <div class="yy">
 	<form action="/result">
-<input type="submit" id="Button1" onclick="window.location.href=#;return false;" name="Search" value="Поиск" style="display:block;width:96px;height:25px;z-index:28;">
+<input type="submit" id="Button1" onclick="window.location.href=#;return false;" style="display:block;width:96px;height:25px;z-index:28;">
 	</form>
 </div>
 <div class="l4">
@@ -155,11 +157,11 @@ $(document).ready(function()
 <div class="b">
 <hr id="Line12" style="display:block;width:249px;">
 <form action="/user">
-<input type="submit" id="Button2" onclick="window.location.href=#;return false;" name="REGSubmit" value="Отправить" style="display:block;width:195px;height:44px;z-index:45;">
+<input type="submit" id="Button2" onclick="window.location.href=#;return false;" style="display:block;width:195px;height:44px;z-index:45;">
 </form>
 <hr id="Line13" style="display:block;width:249px;">
 </div>
-</form>
+<form>
 <div class="footer">
 <div id="wb_Text14">
 <span style="color:#000000;font-family:Arial;font-size:13px;"><br><br><br>Разработчик: Попов Роман Сергеевич | Группа: 09-651(1)<br><br><br><br></span>
