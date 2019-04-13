@@ -29,7 +29,8 @@ def chat_get():
 def chat_post():
     for key, value in flask.request.form.items():
         print("key: {0}, value: {1}".format(key, value))
-    return db.chat_post()
+    return "rrr"
+    # return db.chat_post()
 
 
 @app.route("/chat", methods=["DELETE"])
