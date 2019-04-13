@@ -28,7 +28,7 @@ $(document).ready(function()
 </script>
 </head>
 <body>
-<form>
+<form action="{{url_for('nextPage')}}">
 	<div id="FlexGrid1">
 	<div class="header">
 	<div id="wb_Image2" style="display:inline-block;width:129px;z-index:0;">
@@ -48,9 +48,9 @@ $(document).ready(function()
 	<input type="text" id="Editbox18" style="display:block;width:347px;height:37px;" name="Code" value="" spellcheck="false" placeholder="0123">
 	</div>
 	<div class="profileButton">
-	<form action="/chat" method="post">
+
 		<input type="submit" id="Button4" style="display:block;width:180px;height:25px;z-index:5;">
-	</form>
+
 	</div>
 
 <div class="main1">
@@ -114,9 +114,9 @@ $(document).ready(function()
 <hr id="Line6" style="display:block;width:110px;">
 </div>
 <div class="yy">
-	<form action="/result">
+
 <input type="submit" id="Button1" onclick="window.location.href=#;return false;" style="display:block;width:96px;height:25px;z-index:28;">
-	</form>
+
 </div>
 <div class="l4">
 <div id="wb_Text9">
@@ -156,9 +156,9 @@ $(document).ready(function()
 
 <div class="b">
 <hr id="Line12" style="display:block;width:249px;">
-<form action="/user">
+
 <input type="submit" id="Button2" onclick="window.location.href=#;return false;" style="display:block;width:195px;height:44px;z-index:45;">
-</form>
+
 <hr id="Line13" style="display:block;width:249px;">
 </div>
 </form>
