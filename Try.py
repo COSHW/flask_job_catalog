@@ -2,6 +2,7 @@ import flask
 import db
 import pandas
 import requests
+import json
 
 
 app = flask.Flask(__name__)
@@ -15,13 +16,29 @@ def welcome():
 @app.route("/result")
 def nextPage():
     # print(flask.request.values.to_dict())
-    # if flask.request.values.to_dict()
-    #    info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain"))
+    final = list()
     # return flask.render_template("index2.html", table=info.to_html(index=False))
     if flask.request.values.to_dict()['FindBy'] != '':
-        print("----------------------------------")
-    return "ww"
-
+        radio = flask.request.values.to_dict()['radioQ']
+        if radio == "FIO":
+            FIO = flask.request.values.to_dict()['FindBy'].split(" ")
+            info = json.loads(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
+            for item in info['workers']:
+                if info['workers'][item]['surname'] == FIO[0] and info['workers'][item]['name'] == FIO[1] and info['workers'][item]['patronymic'] == FIO[2]:
+                    final.append(info['workers'][item]['surname'])
+            return flask.render_template("index2.html", table=pandas.DataFrame(final).to_html(index=False))
+        elif radio == "JOB":
+            info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
+        elif radio == "PHONE":
+            info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
+        return flask.render_template("index2.html", table=info)
+    elif flask.request.values.to_dict()['LastName'] != '':
+        pass
+    elif flask.request.values.to_dict()['REGLastName'] != '':
+        pass
+    else:
+        return "Введите данные в поле"
+# {'LastName': '', 'Code': '3322', 'radioQ': 'JOB', 'REGLastName': '', 'REGName': '', 'FindBy': '123123', 'REGPatro': '', 'REGPhone': '', 'REGAdress': '', 'REGJob': '', 'REGSchedule': '', 'REGWorkTime': ''}
 
 @app.route("/chat", methods=["GET"])
 def chat_get():

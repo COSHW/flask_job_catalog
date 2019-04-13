@@ -87,7 +87,6 @@ def get_by_id2(id):
     return result
 
 
-
 def get_by_id3(id):
     cur.execute("select worker.id, worker.surname, worker.name, worker.patronymic, worker.house, worker.phonenumber, worker.payment, worker.payday, position.position from worker inner join position on worker.position=position.id where worker.id = %s", (id, ))
     result = cur.fetchall()
