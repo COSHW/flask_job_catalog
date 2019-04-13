@@ -26,7 +26,11 @@ def nextPage():
             for item in info['workers']:
                 if info['workers'][item]['surname'] == FIO[0] and info['workers'][item]['name'] == FIO[1] and info['workers'][item]['patronymic'] == FIO[2]:
                     final.append([info['workers'][item]['surname'], info['workers'][item]['name'], info['workers'][item]['patronymic'], info['workers'][item]['position'], info['workers'][item]['phonenumber'], info['workers'][item]['house'], info['workers'][item]['schedule'], info['workers'][item]['worktime'], info['workers'][item]['payment'], info['workers'][item]['payday']])
-            return flask.render_template("index2.html", table=pandas.DataFrame(final).to_html(index=False, columns=["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес", "Расписание", "Время работы", "Зарплата", "День выдачи"]))
+            columns = ["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес", "Расписание",
+                       "Время работы", "Зарплата", "День выдачи"]
+            table = pandas.DataFrame(final).to_html(index=False)
+            table.columns = columns
+            return flask.render_template("index2.html", table=table)
         elif radio == "JOB":
             info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
         elif radio == "PHONE":
