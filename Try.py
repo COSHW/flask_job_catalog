@@ -29,7 +29,12 @@ def chat_get():
 def chat_post():
     #for key, value in flask.request.form.items():
     #    print("key: {0}, value: {1}".format(key, value))
-    print(flask.request.form)
+    print("values: ")
+    print(flask.request.values)
+    print("args: ")
+    print(flask.request.args)
+    print("data: ")
+    print(flask.request.data)
     return "rrr"
     # return db.chat_post()
 
