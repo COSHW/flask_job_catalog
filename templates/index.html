@@ -28,7 +28,7 @@ $(document).ready(function()
 </script>
 </head>
 <body>
-<form action="/chat">
+<form action="/chat" method="post">
 	<div id="FlexGrid1">
 	<div class="header">
 	<div id="wb_Image2" style="display:inline-block;width:129px;z-index:0;">
@@ -49,6 +49,7 @@ $(document).ready(function()
 	</div>
 	<div class="profileButton">
 	<input type="submit" id="Button4" name="" value="Вход" style="display:block;width:180px;height:25px;z-index:5;">
+
 	</div>
 
 <div class="main1">
@@ -113,7 +114,9 @@ $(document).ready(function()
 <hr id="Line6" style="display:block;width:110px;">
 </div>
 <div class="yy">
+	<form action="/chat" method="post">
 <input type="submit" id="Button1" onclick="window.location.href=#;return false;" name="Search" value="Поиск" style="display:block;width:96px;height:25px;z-index:28;">
+	</form>
 </div>
 <div class="l4">
 <div id="wb_Text9">
@@ -163,6 +166,5 @@ $(document).ready(function()
 </div>
 </div>
 </div>
-</form>
 </body>
 </html>
