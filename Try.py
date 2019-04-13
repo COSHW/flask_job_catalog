@@ -1,5 +1,7 @@
 import flask
 import db
+import pandas
+import requests
 
 
 app = flask.Flask(__name__)
@@ -12,11 +14,12 @@ def welcome():
 
 @app.route("/result")
 def result():
-    return flask.render_template("index2.html")
+    info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain"))
+    return flask.render_template("index2.html", table=info.to_html(index=False))
 
 
-@app.route("/user/<string:last><int:phone>")
-def profile(last, phone):
+@app.route("/user")
+def profile():
     return flask.render_template("index3.html")
 
 
@@ -27,11 +30,8 @@ def chat_get():
 
 @app.route("/chat", methods=["POST"])
 def chat_post():
-    #for key, value in flask.request.form.items():
-    #    print("key: {0}, value: {1}".format(key, value))
     print("values: ")
-    print(flask.request.values[1][0][2])
-    print(flask.request.values[1][0][3])
+    print(flask.request.values.to_dict())
     return "rrr"
     # return db.chat_post()
 
@@ -124,18 +124,18 @@ def get():
 def get_by_id(id):
     schedule = ""
     schedules = []
-    for a in range(len(db.get_by_id1())):
-        schedule = schedule + db.get_by_id1()[a][1] + ", "
+    for a in range(len(db.get_by_id1(id))):
+        schedule = schedule + db.get_by_id1(id)[a][1] + ", "
     schedules.append(schedule[:-2])
 
     worktime = ""
     worktimes = []
-    for a in range(len(db.get_by_id2())):
-        worktime = worktime + db.get_by_id2()[a][1] + ", "
+    for a in range(len(db.get_by_id2(id))):
+        worktime = worktime + db.get_by_id2(id)[a][1] + ", "
     worktimes.append(worktime[:-2])
 
     final = {}
-    final.update({db.get_by_id3()[0][0]: {"surname": db.get_by_id3()[0][1], "name": db.get_by_id3()[0][2], "patronymic": db.get_by_id3()[0][3], "house": db.get_by_id3()[0][4], "phonenumber": db.get_by_id3()[0][5], "payment": db.get_by_id3()[0][6], "payday": db.get_by_id3()[0][7], "schedule": schedules[0], "worktime": worktimes[0], "position": db.get_by_id3()[0][8]}})
+    final.update({db.get_by_id3(id)[0][0]: {"surname": db.get_by_id3(id)[0][1], "name": db.get_by_id3(id)[0][2], "patronymic": db.get_by_id3(id)[0][3], "house": db.get_by_id3(id)[0][4], "phonenumber": db.get_by_id3(id)[0][5], "payment": db.get_by_id3(id)[0][6], "payday": db.get_by_id3(id)[0][7], "schedule": schedules[0], "worktime": worktimes[0], "position": db.get_by_id3(id)[0][8]}})
     return flask.jsonify({"workers": final})
 
 
