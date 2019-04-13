@@ -17,7 +17,6 @@ def welcome():
 def nextPage():
     # print(flask.request.values.to_dict())
     final = list()
-    final.append(["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес", "Расписание","Время работы", "Зарплата", "День выдачи"])
     # return flask.render_template("index2.html", table=info.to_html(index=False))
     if flask.request.values.to_dict()['FindBy'] != '':
         radio = flask.request.values.to_dict()['radioQ']
@@ -28,7 +27,7 @@ def nextPage():
                 if info['workers'][item]['surname'] == FIO[0] and info['workers'][item]['name'] == FIO[1] and info['workers'][item]['patronymic'] == FIO[2]:
                     final.append([info['workers'][item]['surname'], info['workers'][item]['name'], info['workers'][item]['patronymic'], info['workers'][item]['position'], info['workers'][item]['phonenumber'], info['workers'][item]['house'], info['workers'][item]['schedule'], info['workers'][item]['worktime'], info['workers'][item]['payment'], info['workers'][item]['payday']])
 
-            return flask.render_template("index2.html", table=pandas.DataFrame(final).to_html(index=False, columns=False))
+            return flask.render_template("index2.html", table=pandas.DataFrame(final, columns=["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес", "Расписание","Время работы", "Зарплата", "День выдачи"]).to_html(index=False))
 
         elif radio == "JOB":
             info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
