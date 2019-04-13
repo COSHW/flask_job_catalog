@@ -14,16 +14,13 @@ def welcome():
 
 @app.route("/result")
 def nextPage():
-    print(flask.request.values.to_dict())
-    #if flask.request.values.to_dict()
+    # print(flask.request.values.to_dict())
+    # if flask.request.values.to_dict()
     #    info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain"))
-    #return flask.render_template("index2.html", table=info.to_html(index=False))
-    return "eee"
-
-
-@app.route("/user")
-def profile():
-    return flask.render_template("index3.html")
+    # return flask.render_template("index2.html", table=info.to_html(index=False))
+    if flask.request.values.to_dict()['FindBy'] != '':
+        print("----------------------------------")
+    return "ww"
 
 
 @app.route("/chat", methods=["GET"])
