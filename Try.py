@@ -26,8 +26,10 @@ def nextPage():
             for item in info['workers']:
                 if info['workers'][item]['surname'] == FIO[0] and info['workers'][item]['name'] == FIO[1] and info['workers'][item]['patronymic'] == FIO[2]:
                     final.append([info['workers'][item]['surname'], info['workers'][item]['name'], info['workers'][item]['patronymic'], info['workers'][item]['position'], info['workers'][item]['phonenumber'], info['workers'][item]['house'], info['workers'][item]['schedule'], info['workers'][item]['worktime'], info['workers'][item]['payment'], info['workers'][item]['payday']])
-
-            return flask.render_template("index2.html", table=pandas.DataFrame(final, columns=["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес", "Расписание","Время работы", "Зарплата", "День выдачи"]).to_html(index=False))
+            table = pandas.DataFrame(final, columns=["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес", "Расписание","Время работы", "Зарплата", "День выдачи"])
+            s = table.style.set_properties(**{'align': 'center'})
+            s.render()
+            return flask.render_template("index2.html", table=table.to_html(index=False))
 
         elif radio == "JOB":
             info = pandas.DataFrame(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
