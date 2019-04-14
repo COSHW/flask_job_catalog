@@ -46,7 +46,7 @@ def view(db):
         result = cur.fetchall()
         return result
     elif db == "position":
-        cur.execute("select * from " + db + "where")
+        cur.execute("select * from " + db)
         result = cur.fetchall()
         return result
     elif db == "worktime":
@@ -104,7 +104,8 @@ def insert_into():
     payment = flask.request.json['payment']
     payday = flask.request.json['payday']
     house = flask.request.json['house']
-    cur.execute("insert into worker (surname, name, patronymic, house, phonenumber, payment, payday, position) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"', '"+phonenumber+"', '"+payment+"', '"+payday+"', "+str(position)+")")
+    cur.execute("insert into position (position) values ("+position+")")
+    cur.execute("insert into worker (surname, name, patronymic, house, phonenumber, payment, payday, position) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"', '"+phonenumber+"', '"+payment+"', '"+payday+"', (select id from position where position = %s))", (position,))
     conn.commit()
     for a in range(len(schedule)):
         cur.execute("insert into schedule (workerid, schedule) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+schedule[a]+"')")
