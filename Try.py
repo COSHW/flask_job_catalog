@@ -59,8 +59,9 @@ def nextPage():
             return flask.render_template("index2.html", table=table.to_html(index=False))
     elif flask.request.values.to_dict()['LastName'] != '':
         pass
-    elif flask.request.values.to_dict()['REGLastName'] != '':
-        pass
+    elif flask.request.values.to_dict()['REGLastName'] != '' and flask.request.values.to_dict()['REGName'] != '' and flask.request.values.to_dict()['REGPatro'] != '' and flask.request.values.to_dict()['REGPhone'] != '' and flask.request.values.to_dict()['REGAdress'] != '':
+        requests.post("https://romanrestplz.herokuapp.com/tools/db/maintain", json={'surname': flask.request.values.to_dict()['REGLastName'], 'name': flask.request.values.to_dict()['REGName'], 'patronymic': flask.request.values.to_dict()['REGPatro'], 'house': flask.request.values.to_dict()['REGAdress'], 'schedule': flask.request.values.to_dict()['REGSchedule'], 'worktime': flask.request.values.to_dict()['REGWorkTime'], 'phonenumber': flask.request.values.to_dict()['REGPhone'], 'position': flask.request.values.to_dict()['REGJob'], 'payment': "Неизвестно", 'payday': "Неизвестно"})
+        return flask.render_template("index3.html", name=flask.request.values.to_dict()['REGName'], surname=flask.request.values.to_dict()['REGLastName'], FIO=flask.request.values.to_dict()['REGLastName']+" "+flask.request.values.to_dict()['REGName'][0]+". "+flask.request.values.to_dict()['REGPatro'][0]+".", code=flask.request.values.to_dict()['REGPhone'][7:-1])
     else:
         return "Введите данные в поле"
 # {'LastName': '', 'Code': '3322', 'radioQ': 'JOB', 'REGLastName': '', 'REGName': '', 'FindBy': '123123', 'REGPatro': '', 'REGPhone': '', 'REGAdress': '', 'REGJob': '', 'REGSchedule': '', 'REGWorkTime': ''}
