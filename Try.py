@@ -14,7 +14,7 @@ def welcome():
 
 
 @app.route("/result")
-def nextPage():
+def result():
     # print(flask.request.values.to_dict())
     final = list()
     # return flask.render_template("index2.html", table=info.to_html(index=False))
@@ -43,6 +43,7 @@ def nextPage():
                                      columns=["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес",
                                               "Расписание", "Время работы", "Зарплата", "День выдачи"])
             return flask.render_template("index2.html", table=table.to_html(index=False))
+
         elif radio == "PHONE":
             PHONE = flask.request.values.to_dict()['FindBy']
             info = json.loads(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
@@ -57,14 +58,33 @@ def nextPage():
                                      columns=["Фамилия", "Имя", "Отчество", "Должность", "Номер телефона", "Дом. адрес",
                                               "Расписание", "Время работы", "Зарплата", "День выдачи"])
             return flask.render_template("index2.html", table=table.to_html(index=False))
-    elif flask.request.values.to_dict()['LastName'] != '':
-        pass
+
+    elif flask.request.values.to_dict()['LastName'] != '' and flask.request.values.to_dict()['Code'] != '':
+        last_name = flask.request.values.to_dict()['LastName']
+        code = flask.request.values.to_dict()['Code']
+        info = json.loads(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
+        for item in info['workers']:
+            if info['workers'][item]['surname'] == last_name and info['workers'][item]['phonenumber'][7:11] == code:
+                worktime = info['workers'][item]['worktime']
+                schedule = info['workers'][item]['schedule']
+                job = info['workers'][item]['position']
+                adress = info['workers'][item]['house']
+                phone = info['workers'][item]['phonenumber']
+                patro = info['workers'][item]['patronymic']
+                name = info['workers'][item]['name']
+                surname = info['workers'][item]['surname']
+                FIO = info['workers'][item]['surname']+" "+info['workers'][item]['name'][0]+". "+info['workers'][item]['patronymic'][0]+"."
+                return flask.render_template("index3.html", payday="Неизвестно", payment="Неизвестно", worktime=worktime, schedule=schedule, job=job, adress=adress, phone=phone, patro=patro, name=name, surname=surname, FIO=FIO, code=code)
+        return "Такого пользователя нет в базе"
+
     elif flask.request.values.to_dict()['REGLastName'] != '' and flask.request.values.to_dict()['REGName'] != '' and flask.request.values.to_dict()['REGPatro'] != '' and flask.request.values.to_dict()['REGPhone'] != '' and flask.request.values.to_dict()['REGAdress'] != '':
         requests.post("https://romanrestplz.herokuapp.com/tools/db/maintain", json={'surname': flask.request.values.to_dict()['REGLastName'], 'name': flask.request.values.to_dict()['REGName'], 'patronymic': flask.request.values.to_dict()['REGPatro'], 'house': flask.request.values.to_dict()['REGAdress'], 'schedule': flask.request.values.to_dict()['REGSchedule'], 'worktime': flask.request.values.to_dict()['REGWorkTime'], 'phonenumber': flask.request.values.to_dict()['REGPhone'], 'position': flask.request.values.to_dict()['REGJob'], 'payment': "Неизвестно", 'payday': "Неизвестно"})
         return flask.render_template("index3.html", payday="Неизвестно", payment="Неизвестно", worktime=flask.request.values.to_dict()['REGWorkTime'], schedule=flask.request.values.to_dict()['REGSchedule'], job=flask.request.values.to_dict()['REGJob'], adress=flask.request.values.to_dict()['REGAdress'], phone=flask.request.values.to_dict()['REGPhone'], patro=flask.request.values.to_dict()['REGPatro'], name=flask.request.values.to_dict()['REGName'], surname=flask.request.values.to_dict()['REGLastName'], FIO=flask.request.values.to_dict()['REGLastName']+" "+flask.request.values.to_dict()['REGName'][0]+". "+flask.request.values.to_dict()['REGPatro'][0]+".", code=flask.request.values.to_dict()['REGPhone'][7:11])
+
     else:
         return "Введите данные в поле"
 # {'LastName': '', 'Code': '3322', 'radioQ': 'JOB', 'REGLastName': '', 'REGName': '', 'FindBy': '123123', 'REGPatro': '', 'REGPhone': '', 'REGAdress': '', 'REGJob': '', 'REGSchedule': '', 'REGWorkTime': ''}
+
 
 @app.route("/chat", methods=["GET"])
 def chat_get():
