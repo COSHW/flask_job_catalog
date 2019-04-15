@@ -15,7 +15,6 @@ def welcome():
 
 @app.route("/result")
 def result():
-    # print(flask.request.values.to_dict())
     final = list()
     # return flask.render_template("index2.html", table=info.to_html(index=False))
     if flask.request.values.to_dict()['FindBy'] != '':
