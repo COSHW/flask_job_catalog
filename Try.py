@@ -64,8 +64,8 @@ def result():
         info = json.loads(requests.get("https://romanrestplz.herokuapp.com/tools/db/maintain").text)
         for item in info['workers']:
             if info['workers'][item]['surname'] == last_name and info['workers'][item]['phonenumber'][7:11] == code:
-                worktime = info['workers'][item]['worktime']
-                schedule = info['workers'][item]['schedule']
+                worktime = info['workers'][item]['worktime'].split(", ")
+                schedule = info['workers'][item]['schedule'].split(", ")
                 job = info['workers'][item]['position']
                 adress = info['workers'][item]['house']
                 phone = info['workers'][item]['phonenumber']
