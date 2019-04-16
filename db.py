@@ -104,7 +104,13 @@ def insert_into():
     payment = flask.request.json['payment']
     payday = flask.request.json['payday']
     house = flask.request.json['house']
-    cur.execute("insert into position (position) values ('"+position+"')")
+    cur.execute("select * from position")
+    res = cur.fetchall()
+    for a in range(len(res)):
+        if position in res:
+            pass
+        else:
+            cur.execute("insert into position (position) values ('"+position+"')")
     cur.execute("insert into worker (surname, name, patronymic, house, phonenumber, payment, payday, position) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"', '"+phonenumber+"', '"+payment+"', '"+payday+"', (select id from position where position = '"+position+"'))")
     conn.commit()
     for a in range(len(schedule)):
