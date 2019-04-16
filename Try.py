@@ -177,11 +177,9 @@ def get():
             worktimes.append(worktime)
 
     final = {}
-    print(db.get1())
-    print(db.get2())
-    print(db.get3())
+
     for a in range(len(db.get3())):
-        final.update({db.get3()[a][0]: {"surname": db.get3()[a][1], "name": db.get3()[a][2], "patronymic": db.get3()[a][3], "house": db.get3()[a][4], "phonenumber": db.get3()[a][5], "payment": db.get3()[a][6], "payday": db.get3()[a][7], "schedule": schedules[a], "worktime": worktimes[a], "position": db.get3()[a][8]}})
+        print(final.update({db.get3()[a][0]: {"surname": db.get3()[a][1], "name": db.get3()[a][2], "patronymic": db.get3()[a][3], "house": db.get3()[a][4], "phonenumber": db.get3()[a][5], "payment": db.get3()[a][6], "payday": db.get3()[a][7], "schedule": schedules[a], "worktime": worktimes[a], "position": db.get3()[a][8]}}))
     return flask.jsonify({"workers": final})
 
 
