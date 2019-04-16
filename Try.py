@@ -242,7 +242,7 @@ def make_table4():
     return db.make_table_worktime()
 
 
-@app.route("/tools/db/deletetable/<string:db>")
+@app.route("/tools/db/deletetable/<string:data>")
 def delete_table(data):
     return db.delete_table(data)
 
