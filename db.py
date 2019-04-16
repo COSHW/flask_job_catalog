@@ -97,8 +97,8 @@ def insert_into():
     surname = flask.request.json['surname']
     name = flask.request.json['name']
     patronymic = flask.request.json['patronymic']
-    schedule = flask.request.json['schedule']
-    worktime = flask.request.json['worktime']
+    schedule = flask.request.json['schedule'].split(", ")
+    worktime = flask.request.json['worktime'].split(", ")
     phonenumber = flask.request.json['phonenumber']
     position = flask.request.json['position']
     payment = flask.request.json['payment']
