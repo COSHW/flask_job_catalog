@@ -1,0 +1,5 @@
+function clearRestFields(button){
+if (button == 1) {document.getElementById("SiteSearch1").value = ""; document.getElementById("regLast").value = ""; document.getElementById("regName").value = ""; document.getElementById("regPatro").value = ""; document.getElementById("regPhone").value = ""; document.getElementById("regAddress").value = ""; document.getElementById("regJob").value = ""; document.getElementById("regSched").value = ""; document.getElementById("regtime").value = "";}
+if (button == 2) {document.getElementById("regLast").value = ""; document.getElementById("regName").value = ""; document.getElementById("regPatro").value = ""; document.getElementById("regPhone").value = ""; document.getElementById("regAddress").value = ""; document.getElementById("regJob").value = ""; document.getElementById("regSched").value = ""; document.getElementById("regtime").value = ""; document.getElementById("nameField").value = ""; document.getElementById("codeField").value = "";}
+if (button == 3) {document.getElementById("SiteSearch1").value = ""; document.getElementById("nameField").value = ""; document.getElementById("codeField").value = "";}
+}
