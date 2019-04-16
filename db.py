@@ -111,7 +111,7 @@ def insert_into():
             pass
         else:
             cur.execute("insert into position (position) values ('"+position+"')")
-    cur.execute("insert into worker (surname, name, patronymic, house, phonenumber, payment, payday, position) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"', '"+phonenumber+"', '"+payment+"', '"+payday+"', (select id from position where position = '"+position+"'))")
+    cur.execute("insert into worker (surname, name, patronymic, house, phonenumber, payment, payday, position) values ('"+surname+"', '"+name+"', '"+patronymic+"', '"+house+"', '"+phonenumber+"', '"+payment+"', '"+payday+"', (select position.id from position where position = '"+position+"' limit 1))")
     conn.commit()
     for a in range(len(schedule)):
         cur.execute("insert into schedule (workerid, schedule) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+schedule[a]+"')")
