@@ -9,8 +9,12 @@
 <link href="../static/index.css" rel="stylesheet">
 <link rel="shortcut icon" type="image/x-icon" href="https://romanrestplz.herokuapp.com/static/ico.ico">
 
-<script src="my.js" type="text/javascript">
-
+<script type="text/javascript">
+function clearRestFields(button){
+if (button == 1) {document.getElementById("SiteSearch1").value = ""; document.getElementById("regLast").value = ""; document.getElementById("regName").value = ""; document.getElementById("regPatro").value = ""; document.getElementById("regPhone").value = ""; document.getElementById("regAddress").value = ""; document.getElementById("regJob").value = ""; document.getElementById("regSched").value = ""; document.getElementById("regtime").value = "";}
+if (button == 2) {document.getElementById("regLast").value = ""; document.getElementById("regName").value = ""; document.getElementById("regPatro").value = ""; document.getElementById("regPhone").value = ""; document.getElementById("regAddress").value = ""; document.getElementById("regJob").value = ""; document.getElementById("regSched").value = ""; document.getElementById("regtime").value = ""; document.getElementById("nameField").value = ""; document.getElementById("codeField").value = "";}
+if (button == 3) {document.getElementById("SiteSearch1").value = ""; document.getElementById("nameField").value = ""; document.getElementById("codeField").value = "";}
+}
 </script>
 
 </head>
@@ -19,7 +23,7 @@
 	<div id="FlexGrid1">
 	<div class="header">
 	<div id="wb_Image2" style="display:inline-block;width:129px;z-index:0;">
-	<img src="./index_files/WIZ7aFC.png" id="Image2" alt="">
+	<img src="https://i.imgur.com/qv3Mhec.png" id="Image2" alt="">
 	</div>
 	</div>
 	<div class="profile">
