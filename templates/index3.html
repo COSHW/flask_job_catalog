@@ -8,6 +8,37 @@
 <link href="../static/Untitled3.css" rel="stylesheet">
 <link href="../static/index3.css" rel="stylesheet">
 <link rel="shortcut icon" type="image/x-icon" href="../static/ico.ico" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#Sub').click(  function () {
+                console.log("click");
+                var sur = $('#sur').val();
+				var name = $('#name').val();
+				var patro = $('#patro').val();
+				var phone = $('#phone').val();
+				var house = $('#house').val();
+				var job = $('#job').val();
+				var schedule = $('#schedule').val();
+				var worktime = $('#worktime').val();
+				var payment = $('#payment').val();
+				var payday = $('#payday').val();
+
+                $.ajax({
+                    url: 'https://romanrestplz.herokuapp.com/tools/db/maintain/1',    //Your api url
+                    type: 'PUT',   //type is any HTTP method
+                    data: {'surname': sur, 'name': name, 'patronymic': patro, 'house': house, 'schedule': schedule, 'worktime': worktime, 'phonenumber': phone, 'position': job, 'payment': payment, 'payday': payday},      //Data as js object
+                    success: function () {
+					$('#Sub').text("Изменения успешны!")
+                    }
+                })
+                ;
+
+            });
+        });
+    </script>
 </head>
 <body>
 <div id="FlexGrid1">
@@ -43,74 +74,74 @@
 <div id="wb_Text6">
 <span style="color:#000000;font-family:Arial;font-size:13px;">Фамилия</span>
 </div>
-<input type="text" id="Editbox9" style="display:block;width:454px;height:37px;" name="Editbox9" value='{{surname|safe}}' spellcheck="false">
+<input type="text" id="sur" style="display:block;width:454px;height:37px;" name="Editbox9" value='{{surname|safe}}' spellcheck="false">
 <hr id="Line1" style="display:block;width:325px;">
 </div>
 <div class="data2">
 <div id="wb_Text7">
 <span style="color:#000000;font-family:Arial;font-size:13px;">Имя</span>
 </div>
-<input type="text" id="Editbox10" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{name|safe}}" spellcheck="false">
+<input type="text" id="name" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{name|safe}}" spellcheck="false">
 <hr id="Line3" style="display:block;width:325px;">
 </div>
 <div class="data3">
 <div id="wb_Text8">
 <span style="color:#000000;font-family:Arial;font-size:13px;">Отчество</span>
 </div>
-<input type="text" id="Editbox11" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{patro|safe}}" spellcheck="false">
+<input type="text" id="patro" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{patro|safe}}" spellcheck="false">
 <hr id="Line4" style="display:block;width:325px;">
 </div>
 <div class="data4">
 <div id="wb_Text9">
 <span style="color:#000000;font-family:Arial;font-size:13px;">Номер телефона</span>
 </div>
-<input type="text" id="Editbox12" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{phone|safe}}" spellcheck="false">
+<input type="text" id="phone" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{phone|safe}}" spellcheck="false">
 <hr id="Line5" style="display:block;width:325px;">
 </div>
 <div class="data5">
 <div id="wb_Text10">
 <span style="color:#000000;font-family:Arial;font-size:13px;">Адрес</span>
 </div>
-<input type="text" id="Editbox13" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{adress|safe}}" spellcheck="false">
+<input type="text" id="house" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{adress|safe}}" spellcheck="false">
 <hr id="Line6" style="display:block;width:325px;">
 </div>
 <div class="data6">
 <div id="wb_Text11">
 <span style="color:#000000;font-family:Arial;font-size:13px;">Профессия</span>
 </div>
-<input type="text" id="Editbox14" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{job|safe}}" spellcheck="false">
+<input type="text" id="job" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{job|safe}}" spellcheck="false">
 <hr id="Line7" style="display:block;width:325px;">
 </div>
 <div class="data7">
 <div id="wb_Text12">
 <span style="color:#000000;font-family:Arial;font-size:13px;">Расписание</span>
 </div>
-<input type="text" id="Editbox15" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{schedule|safe}}" spellcheck="false">
+<input type="text" id="schedule" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{schedule|safe}}" spellcheck="false">
 <hr id="Line8" style="display:block;width:325px;">
 </div>
 <div class="data8">
 <div id="wb_Text13">
 <span style="color:#000000;font-family:Arial;font-size:13px;">Часы работы</span>
 </div>
-<input type="text" id="Editbox16" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{worktime|safe}}" spellcheck="false">
+<input type="text" id="worktime" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{worktime|safe}}" spellcheck="false">
 <hr id="Line9" style="display:block;width:325px;">
 </div>
 <div class="data9">
 <div id="wb_Text4">
 <span style="color:#000000;font-family:Arial;font-size:13px;">Зарплата</span>
 </div>
-<input type="text" id="Editbox1" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{payment|safe}}" spellcheck="false">
+<input type="text" id="payment" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{payment|safe}}" spellcheck="false">
 <hr id="Line10" style="display:block;width:325px;">
 </div>
 <div class="data10">
 <div id="wb_Text5">
 <span style="color:#000000;font-family:Arial;font-size:13px;">День выдачи зарплаты</span>
 </div>
-<input type="text" id="Editbox2" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{payday|safe}}" spellcheck="false">
+<input type="text" id="payday" style="display:block;width:454px;height:37px;" name="Editbox9" value="{{payday|safe}}" spellcheck="false">
 <hr id="Line11" style="display:block;width:325px;">
 </div>
 <div class="Apply">
-<input type="submit" id="Button2" name="" value="Применить" style="display:block;width:276px;height:48px;z-index:38;">
+<input type="submit" id="Sub" name="" value="Применить" style="display:block;width:276px;height:48px;z-index:38;">
 </div>
 <div class="footer">
 <div id="wb_Text14">
