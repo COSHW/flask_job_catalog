@@ -72,8 +72,10 @@ def result():
                 patro = info['workers'][item]['patronymic']
                 name = info['workers'][item]['name']
                 surname = info['workers'][item]['surname']
+                payday = info['workers'][item]['payday']
+                payment = info['workers'][item]['payment']
                 FIO = info['workers'][item]['surname']+" "+info['workers'][item]['name'][0]+". "+info['workers'][item]['patronymic'][0]+"."
-                return flask.render_template("index3.html", payday="Неизвестно", payment="Неизвестно", worktime=worktime, schedule=schedule, job=job, adress=adress, phone=phone, patro=patro, name=name, surname=surname, FIO=FIO, code=code)
+                return flask.render_template("index3.html", payday=payday, payment=payment, worktime=worktime, schedule=schedule, job=job, adress=adress, phone=phone, patro=patro, name=name, surname=surname, FIO=FIO, code=code)
         return "Такого пользователя нет в базе"
 
     elif flask.request.values.to_dict()['REGLastName'] != '' and flask.request.values.to_dict()['REGName'] != '' and flask.request.values.to_dict()['REGPatro'] != '' and flask.request.values.to_dict()['REGPhone'] != '' and flask.request.values.to_dict()['REGAdress'] != '':
