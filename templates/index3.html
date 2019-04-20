@@ -30,9 +30,13 @@
                     url: 'https://romanrestplz.herokuapp.com/tools/db/maintain/1',  
 					dataType: 'json',
                     type: 'PUT',   //type is any HTTP method
-                    data: '{"surname": sur, "name": name, "patronymic": patro, "house": house, "schedule": schedule, "worktime": worktime, "phonenumber": phone, "position": job, "payment": payment, "payday": payday}',      //Data as js object
+					headers: {
+						'x-auth-token': localStorage.accessToken,
+						"Content-Type": "application/json"
+							},
+                    data: {"surname": sur, "name": name, "patronymic": patro, "house": house, "schedule": schedule, "worktime": worktime, "phonenumber": phone, "position": job, "payment": payment, "payday": payday},      //Data as js object
                     success: function () {
-					$('#Sub').text("Изменения успешны!")
+					$('#Sub').val("Изменения успешны!")
                     }
                 })
                 ;

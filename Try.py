@@ -82,7 +82,6 @@ def result():
 
     else:
         return "Введите данные в поле"
-# {'LastName': '', 'Code': '3322', 'radioQ': 'JOB', 'REGLastName': '', 'REGName': '', 'FindBy': '123123', 'REGPatro': '', 'REGPhone': '', 'REGAdress': '', 'REGJob': '', 'REGSchedule': '', 'REGWorkTime': ''}
 
 
 @app.route("/chat", methods=["GET"])
