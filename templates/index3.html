@@ -28,9 +28,9 @@
 
                 $.ajax({
                     url: 'https://romanrestplz.herokuapp.com/tools/db/maintain/1',  
+					dataType: 'json',
                     type: 'PUT',   //type is any HTTP method
-                    data:{'surname': "Попов", 'name': "Роман", 'patronymic': "Сергеевич", 'house': "ул.Лепсе 16", 'schedule': 'Пн, Вт', 'worktime': '11, 12, 13', 'phonenumber': "89509496549", 'position': "Дизайн", 'payment': "2500", 'payday': "17"}, 
-					//{'surname': sur, 'name': name, 'patronymic': patro, 'house': house, 'schedule': schedule, 'worktime': worktime, 'phonenumber': phone, 'position': job, 'payment': payment, 'payday': payday},      //Data as js object
+                    data: '{"surname": sur, "name": name, "patronymic": patro, "house": house, "schedule": schedule, "worktime": worktime, "phonenumber": phone, "position": job, "payment": payment, "payday": payday}',      //Data as js object
                     success: function () {
 					$('#Sub').text("Изменения успешны!")
                     }
