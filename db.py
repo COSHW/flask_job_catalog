@@ -121,33 +121,41 @@ def insert_into():
         conn.commit()
     return "Done!"
 
-"""
+
 def update(id):
     surname = flask.request.json['surname']
     name = flask.request.json['name']
     patronymic = flask.request.json['patronymic']
-    house = flask.request.json['house']
-    schedule = flask.request.json['schedule']
-    worktime = flask.request.json['worktime']
+    schedule = flask.request.json['schedule'].split(", ")
+    worktime = flask.request.json['worktime'].split(", ")
     phonenumber = flask.request.json['phonenumber']
     position = flask.request.json['position']
     payment = flask.request.json['payment']
     payday = flask.request.json['payday']
+    house = flask.request.json['house']
+    cur.execute("select * from position")
+    res = cur.fetchall()
+    for a in range(len(res)):
+        if position in res:
+            pass
+        else:
+            cur.execute("insert into position (position) values ('"+position+"')")
+
     cur.execute(
-        "update worker set surname = '" + surname + "', name = '" + name + "', patronymic = '" + patronymic + "', house = '" + house + "', phonenumber = '"+phonenumber+"', payment = '"+payment+"', payday = '"+payday+"', position = "+str(position)+" where id = " + id)
+        "update worker set surname = '" + surname + "', name = '" + name + "', patronymic = '" + patronymic + "', house = '" + house + "', phonenumber = '"+phonenumber+"', payment = '"+payment+"', payday = '"+payday+"', position = (select position.id from position where position = '"+position+"' limit 1) where id = " + id)
     conn.commit()
     cur.execute("delete from schedule where workerid = " + id)
     conn.commit()
-	for a in range(len(schedule)):
-		cur.execute("insert into schedule (workerid, schedule) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+schedule[a]+"')")
-		conn.commit()
+    for a in range(len(schedule)):
+        cur.execute("insert into schedule (workerid, schedule) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+schedule[a]+"')")
+    conn.commit()
     cur.execute("delete from worktime where workerid = " + id)
     conn.commit()
-	for a in range(len(worktime)):
+    for a in range(len(worktime)):
         cur.execute("insert into worktime (workerid, worktime) values ((select id from worker where surname like '"+surname+"' and name like '"+name+"' and patronymic like '"+patronymic+"' limit 1), '"+worktime[a]+"')")
         conn.commit()
     return "Done!"
-"""
+
 
 def delete(id):
     cur.execute("delete from schedule where workerid = "+id)
